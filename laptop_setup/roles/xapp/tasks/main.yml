@@ -1,0 +1,52 @@
+---
+
+- name: install xapp 
+  pacman:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - network-manager-applet
+    - mpv
+    - livestreamer
+    - firefox
+    - libreoffice-fresh
+    - rxvt-unicode
+    - ttf-droid
+    - rofi
+
+- name: install urxvt-vtwheel
+  copy:
+    src: "files/vtwheel"
+    dest: "/usr/lib/urxvt/perl/vtwheel" 
+
+- name: setup urxvt
+  copy:
+    src: files/Xresources
+    dest: "/home/{{ username }}/.Xresources"
+    owner: "{{ username }}" 
+    group: users 
+    mode: 0644
+
+- name: create .mpv folder
+  file:
+    path: "/home/{{ username }}/.mpv"
+    owner: "{{ username }}" 
+    group: users 
+    state: directory
+    mode: 0755
+
+- name: config mpv
+  copy:
+    src: files/mpv
+    dest: "/home/{{ username }}/.mpv/config"
+    owner: "{{ username }}" 
+    group: users 
+    mode: 0644
+
+- name: config livestreamer
+  copy:
+    src: files/livestreamerrc
+    dest: "/home/{{ username }}/.livestreamerrc"
+    owner: "{{ username }}" 
+    group: users 
+    mode: 0644

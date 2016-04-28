@@ -1,0 +1,28 @@
+---
+
+- name: Mount system partition
+  mount:
+    name: "/mnt"
+    src: "{{ disk_dev }}2" 
+    fstype: "btrfs"
+    opts: "defaults,noatime,ssd,compress=lzo"
+    state: "mounted"
+
+- name: Mount boot partition
+  mount:
+    name: "/mnt/boot"
+    src: "{{ disk_dev }}1" 
+    fstype: "vfat"
+    state: "mounted"
+
+#- name: Create home subvolume
+#  command: "btrfs subvolume create /mnt/home"
+#
+#
+#- name: Mount home partition
+#  mount:
+#    name: "/mnt/home"
+#    src: "{{ disk_dev }}2" 
+#    fstype: "btrfs"
+#    opts: "subvol=/home,defaults,noatime,ssd,compress=lzo"
+#    state: "mounted"

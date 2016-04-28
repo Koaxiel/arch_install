@@ -1,0 +1,4 @@
+---
+
+- name: pacstrap
+  command: "pacstrap /mnt base base-devel btrfs-progs ansible git intel-ucode networkmanager linux-lts"  

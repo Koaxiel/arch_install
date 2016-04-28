@@ -1,0 +1,7 @@
+---
+
+- name: "pacman update"
+  pacman: update_cache=yes force=yes
+
+- name: "pacman upgrade"
+  pacman: update_cache=yes upgrade=yes

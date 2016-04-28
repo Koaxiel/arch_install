@@ -1,0 +1,5 @@
+player=mpv
+#player-args=--loop=inf {filename}
+default-stream=best
+player-passthrough=http
+hls-segment-threads=4

@@ -1,0 +1,10 @@
+---
+
+- name: Set localgen en
+  locale_gen: name=en_US.UTF-8 state=present
+
+- name: Set localgen fr
+  locale_gen: name=fr_FR.UTF-8 state=present
+
+- name: Set vconsole
+  copy: src=files/vconsole.conf dest=/etc/vconsole.conf

@@ -1,0 +1,9 @@
+---
+
+- name: "Create user {{ username }}"
+  user: 
+    name: "{{ username }}"
+    shell: /bin/zsh
+    group: users
+    groups: wheel
+    password: "{{ user_password |password_hash('sha512') }}"

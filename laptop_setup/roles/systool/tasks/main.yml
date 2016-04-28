@@ -1,0 +1,31 @@
+---
+
+- name: install system tools
+  pacman: 
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - htop
+    - vim-colorsamplerpack
+    - zsh-syntax-highlighting
+
+- name: setup zsh
+  copy:
+    src: files/zshrc
+    dest: "/home/{{ username }}/.zshrc"
+    owner: "{{ username }}" 
+    group: users 
+    mode: 0644
+
+- name: setup zsh for root
+  copy:
+    src: files/zshrc
+    dest: "/root/.zshrc"
+
+- name: change vt for root
+  user: name=root shell=/bin/zsh 
+
+- name: setup vim
+  copy:
+    src: files/vimrc
+    dest: /etc/vimrc

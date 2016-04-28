@@ -1,0 +1,136 @@
+autoload -U compinit colors
+
+compinit
+colors
+
+#TERM=rxvt-unicode-256color
+
+## history
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+#
+#setopt append_history
+#setopt inc_append_history
+#setopt share_history
+#setopt extended_history
+#
+#setopt hist_verify
+#
+#setopt hist_ignore_dups
+#setopt hist_ignore_space
+#
+#setopt hist_fcntl_lock
+#setopt hist_reduce_blanks
+#
+###
+setopt autocd
+setopt cd_able_vars
+
+## glob
+#setopt glob_dots
+
+
+## prompt
+PROMPT="%{$fg_bold[magenta]%}[%*] %(!.%{$fg_bold[red]%}.%{$fg_bold[green]%}%n@)%m %{$fg_bold[cyan]%}%(!.%1~.%~) %(!.#.$)%{$reset_color%} "
+
+## alias
+setopt completealiases
+alias grep='grep --color=auto'
+alias ls='ls --classify --tabsize=0 --literal --color=auto --show-control-chars -h'
+alias ll='ls -l'
+alias la='ls -la'
+alias ssh='TERM=xterm ssh'
+alias sr='ssh -l root'
+
+## export
+eval `dircolors -b`
+export EDITOR=/usr/bin/vim
+export GREP_COLOR='1;31'
+
+#export GPGKEY=9C926E1A
+
+export WORDCHARS='*?_[]~=&;!#$%^(){}'
+
+#export GOPATH=~/go
+#export PATH="$PATH:$GOPATH/bin"
+
+#export AK_CONFDIR=~/rancid
+
+## kebinding
+typeset -A key
+
+key[Home]=${terminfo[khome]}
+key[End]=${terminfo[kend]}
+key[Insert]=${terminfo[kich1]}
+key[Delete]=${terminfo[kdch1]}
+key[PageUp]=${terminfo[kpp]}
+key[PageDown]=${terminfo[knp]}
+
+[[ -n "${key[Home]}"     ]]  && bindkey  "${key[Home]}"     beginning-of-line
+[[ -n "${key[End]}"      ]]  && bindkey  "${key[End]}"      end-of-line
+[[ -n "${key[Insert]}"   ]]  && bindkey  "${key[Insert]}"   overwrite-mode
+[[ -n "${key[Delete]}"   ]]  && bindkey  "${key[Delete]}"   delete-char
+[[ -n "${key[PageUp]}"   ]]  && bindkey  "${key[PageUp]}"   history-beginning-search-backward
+[[ -n "${key[PageDown]}" ]]  && bindkey  "${key[PageDown]}" history-beginning-search-forward
+
+bindkey '\eOd' backward-word    # ctrl cursor left
+bindkey '\eOc' forward-word     # ctrl cursor right
+
+## completion
+
+setopt always_to_end
+setopt auto_list
+setopt list_ambiguous
+unsetopt rec_exact
+setopt auto_menu
+
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+zstyle ':completion:*' menu select
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:options' description 'yes'
+zstyle ':completion:*:options' auto-description '%d'
+zstyle ':completion:*:descriptions' format "%{$fg[cyan]%} %d%{$reset_color%}"
+
+## case-insensitive,partial-word and then substring completion
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+## ignore completion functions (until the _ignored completer)
+zstyle ':completion:*:functions' ignored-patterns '_*'
+
+## kill command
+zstyle ':completion:*:*:kill:*:processes' command "ps o start,pid,comm,pcpu -u $USER --forest"
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b)(?#)?([0-9][0-9].[0-9])*=36=36=31'
+
+## offer indexes before parameters in subscripts
+zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
+
+## insert all expansions for expand completer
+zstyle ':completion:*:expand:*' tag-order all-expansions
+
+zstyle ':completion:*' completer _complete _list _oldlist _expand _ignored _match _correct _approximate _prefix
+zstyle ':completion:*:approximate:*' max-errors 'reply=( $(( ($#PREFIX+$#SUFFIX)/3 )) numeric )'
+
+## fonction
+h() { if [ -z "$*" ]; then history 1; else history 1 | egrep "$@"; fi; }
+
+## man
+man() {
+      env \
+      LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+      LESS_TERMCAP_md=$(printf "\e[1;31m") \
+      LESS_TERMCAP_me=$(printf "\e[0m") \
+      LESS_TERMCAP_se=$(printf "\e[0m") \
+      LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+      LESS_TERMCAP_ue=$(printf "\e[0m") \
+      LESS_TERMCAP_us=$(printf "\e[1;32m") \
+      PAGER=/usr/bin/less \
+      _NROFF_U=1 \
+      PATH=${HOME}/bin:${PATH} \
+                   man "$@"
+}
+
+## zsh-syntax-highlighting
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+

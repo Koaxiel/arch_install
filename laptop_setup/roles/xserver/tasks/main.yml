@@ -1,0 +1,13 @@
+---
+
+- name: install xorg driver
+  pacman:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - xf86-video-intel 
+    - libva-intel-driver 
+    - xf86-input-libinput
+
+- name: locale x11
+  command: "localectl set-keymap fr-latin9"

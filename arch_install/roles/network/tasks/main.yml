@@ -1,0 +1,5 @@
+---
+
+- name: Enable networkmanager service
+  service: name=NetworkManager enabled=yes
+

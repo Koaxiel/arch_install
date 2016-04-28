@@ -1,0 +1,31 @@
+---
+
+- name: install yaourt
+  pacman: name=yaourt state=present
+
+- name: install aurtils
+  command: "yaourt -S aurutils --noconfirm"
+  become: yes
+  become_user: "{{ username }}"
+
+- name: compile aur package
+  command: "aursync -ck aurutils adapta-gtk-theme paper-icon-theme-git xsettingsd-git"
+  become: yes
+  become_user: "{{ username }}"
+  register: command_result
+  failed_when: "command_result.rc > 1"
+  changed_when: "command_result.rc != 1"
+
+- name: remove aurutils and yaourt
+  pacman: name=aurutils,yaourt state=absent recurse=yes
+
+- name: install aur package
+  pacman: 
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - aurutils
+    - adapta-gtk-theme
+    - paper-icon-theme-git
+    - xsettingsd-git

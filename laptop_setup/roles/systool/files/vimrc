@@ -1,0 +1,137 @@
+" All system-wide defaults are set in $VIMRUNTIME/archlinux.vim (usually just
+" /usr/share/vim/vimfiles/archlinux.vim) and sourced by the call to :runtime
+" you can find below.  If you wish to change any of those settings, you should
+" do it in this file (/etc/vimrc), since archlinux.vim will be overwritten
+" everytime an upgrade of the vim packages is performed.  It is recommended to
+" make changes after sourcing archlinux.vim since it alters the value of the
+" 'compatible' option.
+
+" This line should not be removed as it ensures that various options are
+" properly set to work with the Vim-related packages.
+runtime! archlinux.vim
+
+" If you prefer the old-style vim functionalty, add 'runtime! vimrc_example.vim'
+" Or better yet, read /usr/share/vim/vim72/vimrc_example.vim or the vim manual
+" and configure vim to your own liking!
+
+" pathogen
+"call pathogen#infect()
+
+" go
+"syntax enable  
+"filetype plugin on  
+"set number  
+"let g:go_disable_autoinstall = 0  
+
+" neocomplete
+let g:neocomplete#enable_at_startup = 1
+
+" tagbar
+let g:tagbar_type_go = {  
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
+
+nmap <F8> :TagbarToggle<CR>
+
+" mode non compatible avec vi
+set nocompatible
+
+" On active la coloration syntaxique
+syntax on
+
+" Force le support de 256 couleurs
+set t_Co=256
+
+" Theme
+colorscheme molokai
+"colorscheme evening
+
+set cursorline
+set hlsearch
+
+" Enregistre le fichier en tant que root avec :wr
+"cab wr w !sudo tee %
+
+" Raccourcis clavier
+map <F5> <ESC>:w<CR>
+map <F2> <ESC>:set nu!<CR>
+map <F1> <ESC>:q!<CR>
+"map <F10> <ESC>:wr<CR>
+
+imap <C-a> <ESC>0i
+imap <C-e> <ESC>$i<RIGHT>
+imap ^[Oc <ESC>Wi
+imap Od <ESC>Bi
+imap [a <ESC>{i
+imap [b <ESC>}i
+
+map <C-a> 0i
+map <C-e> $i<RIGHT>
+map Oc W
+map Od B
+map [a {
+map [b }
+map <C-w> i<C-w>
+map <C-u> D
+
+" Encodage par défaut
+set encoding=utf-8
+
+" Replis
+"set fdc=2
+"set fdm=indent
+
+" On vérifie automatiquement les parenthèses
+set sm!
+
+" Numérotation des lignes
+set nu!
+
+" Utilisation de la souris
+set mouse=r
+set ttymouse=urxvt
+set mousemodel=extend
+"behave xterm
+
+" Active le mode sélection
+"set selectmode+=mouse
+
+" Autoindentation
+"set cindent
+"set autoindent
+
+" La touche TAB est remplacée par 4 espaces (good for Python programming :) )
+set tabstop=4
+set shiftwidth=4
+set expandtab
+
+" Permet d'utiliser la touche backspace pour effacer du texte
+"set bs=2
+
+"if has("autocmd")
+"    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+"endif

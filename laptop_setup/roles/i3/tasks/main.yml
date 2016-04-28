@@ -1,0 +1,38 @@
+---
+
+- name: install i3
+  pacman: 
+    name: i3
+    state: present
+
+- name: create .i3 folder
+  file:
+    path: "/home/{{ username }}/.i3"
+    owner: "{{ username }}" 
+    group: users 
+    state: directory
+    mode: 0755
+
+- name: configure i3
+  copy: 
+    src: files/config
+    dest: "/home/{{ username }}/.i3/config"
+    owner: "{{ username }}" 
+    group: users 
+    mode: 0644
+
+
+- name: configure i3status
+  copy: 
+    src: files/i3status.conf
+    dest: "/home/{{ username }}/.i3status.conf"
+    owner: "{{ username }}" 
+    group: users 
+    mode: 0644
+
+- name: install dependencies
+  pacman:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - polkit-gnome

@@ -1,0 +1,17 @@
+---
+
+#- name: plop
+#  debug: "msg={{ ansible_mounts }}"
+
+- name: Create fstab file from ansible_mounts 
+  mount:
+    name: "{{ item.mount }}"
+    src: "UUID={{ item.uuid }}" 
+    fstype: "{{ item.fstype }}"
+    opts: "{{ item.options }}"
+    dump: '0'
+    passno: "{{ '2' if item.mount == '/boot' else '0' }}"
+    state: "present"
+  when: "{{ 'disk_dev|string()' }} in {{ 'item.device|string()' }}"
+  with_items: "{{ ansible_mounts }}"
+    

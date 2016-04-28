@@ -1,0 +1,18 @@
+# Write your default config options here!
+
+vo=opengl
+#vo=opengl-hq
+hwdec=vaapi
+
+# Write your default config options here!
+softvol=yes
+softvol-max=1000
+
+# Display French subtitles if available.
+slang = fr
+
+# Subtitle
+sub-text-color="#ffffffff"                                                     
+sub-text-border-color="#f0000000"
+
+save-position-on-quit
