@@ -17,3 +17,7 @@
     src: files/10-monitor.conf 
     dest: "/etc/X11/xorg.conf.d/10-monitor.conf"
 
+- name: add 30-touchpad.conf
+  copy:
+    src: files/30-touchpad.conf 
+    dest: "/etc/X11/xorg.conf.d/30-touchpad.conf"
