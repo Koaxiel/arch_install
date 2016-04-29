@@ -11,3 +11,9 @@
 
 - name: locale x11
   command: "localectl set-keymap fr-latin9"
+
+- name: add 10-monitor.conf 
+  copy:
+    src: files/10-monitor.conf 
+    dest: "/etc/X11/xorg.conf.d/10-monitor.conf"
+
