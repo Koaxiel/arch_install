@@ -135,3 +135,6 @@ set expandtab
 "if has("autocmd")
 "    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 "endif
+
+"display the status line
+set laststatus=2
