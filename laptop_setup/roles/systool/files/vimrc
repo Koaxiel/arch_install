@@ -95,7 +95,6 @@ map Oc W
 map Od B
 map [a {
 map [b }
-map <C-w> i<C-w>
 map <C-u> D
 
 " Encodage par défaut
