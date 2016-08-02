@@ -13,4 +13,4 @@
     - picocom
     - openbsd-netcat
     - openssh
-  
+    - iperf3  
