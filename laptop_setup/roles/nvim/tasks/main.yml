@@ -2,10 +2,17 @@
 
 - name: install neovim
   pacman:
-    name: "{{ item }}"
+    name: neovim
     state: present
+
+- name: ensure nvim directory exists
+  file:
+    path: "/home/{{ username }}/.config/nvim/{{ item }}"
+    recurse: yes
+    state: directory
   with_items:
-    - neovim
+    - 'colors'
+    - 'autoload'  
 
 - name: install config file
   copy:
