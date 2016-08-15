@@ -48,6 +48,7 @@ endif
 
 set mouse=v
 "set mousefocus
+set clipboard=unnamed
 set clipboard+=unnamedplus
 
 colorscheme molokai
