@@ -30,12 +30,12 @@ set showcmd            " display incomplete commands
 set number             " Show the line numbers on the left side.
 
 set expandtab          " Insert spaces when TAB is pressed.
+set smartindent
 set tabstop=2          " Render TABs using this many spaces.
 set shiftwidth=2       " Indentation amount for < and > commands.
 
 set noerrorbells       " No beeps.
 
-set hlsearch           " Highlight search results.
 set ignorecase         " Make searching case insensitive
 set smartcase          " ... unless the query has capital letters.
 set cursorline
@@ -92,16 +92,18 @@ if !exists(":DiffOrig")
   command DiffOrig vert new | set buftype=nofile | read ++edit # | 0d_ | diffthis
                  \ | wincmd p | diffthis
 endif
+"
+"
 
 " Tell Vim which characters to show for expanded TABs,
 " trailing whitespace, and end-of-lines. VERY useful!
-if &listchars ==# 'eol:$'
-  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
-endif
+"if &listchars ==# 'eol:$'
+"  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+"endif
 set list                " Show problematic characters.
 
 " Also highlight all tabs and trailing whitespace characters.
-highlight ExtraWhitespace ctermbg=darkred guibg=darkpink
+highlight ExtraWhitespace ctermbg=darkred
 match ExtraWhitespace /\s\+$\|\t/
 
 " Raccourcis clavier

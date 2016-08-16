@@ -1,0 +1,25 @@
+---
+# tasks file for gpg
+
+- name: install package for Yubikey
+  pacman:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - pcsc-tools
+    - ccid
+    - libusb-compat
+
+- name: setup gpg-agent
+  copy:
+    src: files/gpg-agent.conf
+    dest: "{{ ansible_env.HOME }}/.gnupg/gpg-agent.conf"
+    owner: "{{ ansible_env.USER }}"
+    group: users
+    mode: 0644
+
+- name: enable pcscd
+  service:
+    name: pcscd
+    enabled: yes
+    state: started
