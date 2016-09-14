@@ -1,17 +1,23 @@
 ---
 
+- name: Create root subvolume
+  command: "btrfs subvolume create /mnt/root subvol_root"
+
+- name: Create home subvolume
+  command: "btrfs subvolume create /mnt/home subvol_home"
+
 - name: Mount system partition
   mount:
-    name: "/mnt"
-    src: "{{ disk_dev }}2" 
+    name: "/mnt/"
+    src: "{{ disk_dev }}2"
     fstype: "btrfs"
-    opts: "defaults,noatime,ssd,compress=lzo"
+    opts: "subvol=/root,defaults,noatime,ssd,compress=lzo"
     state: "mounted"
 
 - name: Mount boot partition
   mount:
     name: "/mnt/boot"
-    src: "{{ disk_dev }}1" 
+    src: "{{ disk_dev }}1"
     fstype: "vfat"
     state: "mounted"
 
@@ -22,7 +28,7 @@
 #- name: Mount home partition
 #  mount:
 #    name: "/mnt/home"
-#    src: "{{ disk_dev }}2" 
+#    src: "{{ disk_dev }}2"
 #    fstype: "btrfs"
 #    opts: "subvol=/home,defaults,noatime,ssd,compress=lzo"
 #    state: "mounted"
