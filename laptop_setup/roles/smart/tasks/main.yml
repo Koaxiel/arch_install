@@ -1,0 +1,13 @@
+---
+# tasks file for smart
+
+- name: install smartmontools
+  pacman:
+    name: smartmontools
+    state: present
+
+- name: start smartd
+  service:
+    name: smartd
+    state: started
+    enabled: yes

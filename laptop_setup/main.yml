@@ -17,6 +17,7 @@
     - { role: nettool, tags: nettool }
     - { role: i3, tags: i3 }
     - { role: gnome, tags: gnome }
+    - { role: smart, tags: smart }
     - { role: xserver, tags: xserver }
     - { role: xapp, tags: xapp }
     - { role: aurutils, tags: aurutils }
