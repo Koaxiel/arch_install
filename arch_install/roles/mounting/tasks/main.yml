@@ -8,10 +8,10 @@
     state: "mounted"
 
 - name: Create root subvolume
-  command: "btrfs subvolume create /mnt/root subvol_root"
+  command: "btrfs subvolume create /mnt/root"
 
 - name: Create home subvolume
-  command: "btrfs subvolume create /mnt/home subvol_home"
+  command: "btrfs subvolume create /mnt/home"
 
 - name: Mout btrfs partition
   mount:
