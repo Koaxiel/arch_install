@@ -1,10 +1,24 @@
 ---
 
+- name: Mout btrfs partition
+  mount:
+    name: "/mnt"
+    src: "{{ disk_dev }}2"
+    fstype: "btrfs"
+    state: "mounted"
+
 - name: Create root subvolume
   command: "btrfs subvolume create /mnt/root subvol_root"
 
 - name: Create home subvolume
   command: "btrfs subvolume create /mnt/home subvol_home"
+
+- name: Mout btrfs partition
+  mount:
+    name: "/mnt"
+    src: "{{ disk_dev }}2"
+    fstype: "btrfs"
+    state: "unmounted"
 
 - name: Mount system partition
   mount:
