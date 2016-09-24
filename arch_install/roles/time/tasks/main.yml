@@ -4,7 +4,7 @@
   file: src=/usr/share/zoneinfo/Europe/Paris dest=/etc/localtime state=link
 
 - name: Set hwclock
-  command: hwclock --systohc --utc
+  command: "hwclock --systohc --utc"
 
 - name: Set ntp
   command: "timedatectl set-ntp true"

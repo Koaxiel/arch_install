@@ -2,4 +2,4 @@ title          Arch Linux
 linux          /vmlinuz-linux
 initrd         /intel-ucode.img
 initrd         /initramfs-linux.img
-options        root=PARTUUID={{ sys_partuuid }} rw
+options        root=PARTUUID={{ sys_partuuid }} rw rootflags=subvol=ROOT

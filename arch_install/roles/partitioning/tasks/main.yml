@@ -1,5 +1,5 @@
 ---
-- name: "check if {{ disk_dev }} exists" 
+- name: "check if {{ disk_dev }} exists"
   stat: "path={{ disk_dev }}"
   register: disk
 
@@ -8,16 +8,17 @@
   when: not disk.stat.exists
 
 - block:
-    - name: "Partitioning on {{ disk_dev }}"
+
+    - name: "Partitioning {{ disk_dev }}"
       command: "{{ item }}"
       with_items:
-          - "sgdisk {{ disk_dev }} -Z"
+          - "sgdisk {{ disk_dev }} -Zo"
           - "parted -s {{ disk_dev }} mklabel gpt"
           - "parted -s {{ disk_dev }} mkpart primary fat32 1MiB 513MiB"
           - "parted -s {{ disk_dev }} mkpart primary btrfs 513MiB 100%"
           - "parted -s {{ disk_dev }} set 1 boot on"
       register: partition
-    
+
     - name: "Fail if return code is not 0"
       fail:
         msg: "The command ({{ item.cmd }}) did not have a 0 return code"
@@ -25,9 +26,12 @@
       with_items: "{{partition.results}}"
 
     - name: "Formate boot partition"
-      command: "mkfs.fat -F32 {{ disk_dev }}1"
-    
-    - name: "Formate system partition" 
-      filesystem: "fstype=btrfs dev={{ disk_dev }}2"
+      command: "mkfs.fat -F32 -n EFI {{ disk_dev }}1"
+
+    - name: "Formate system partition"
+      filesystem:
+        fstype: btrfs
+        opts: "-L System"
+        dev : "{{ disk_dev }}2"
 
   when: disk.stat.exists

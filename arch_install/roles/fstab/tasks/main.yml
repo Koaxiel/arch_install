@@ -1,8 +1,5 @@
 ---
 
-#- name: plop
-#  debug: "msg={{ ansible_mounts }}"
-
 - name: Create fstab file from ansible_mounts
   mount:
     name: "{{ item.mount }}"

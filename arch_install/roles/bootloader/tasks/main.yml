@@ -1,19 +1,12 @@
 ---
 
 - name: Search partuuid with blkid
-  command: "blkid -s PARTUUID -o value /dev/sda2"
-  register: v
+  command: "blkid -s PARTUUID -o value {{disk_dev}}2"
+  register: value
 
 - name: Compute partuuid
-  set_fact: sys_partuuid={{ v.stdout }}
-  when: v.rc == 0
-
-- name: Mount efivars
-  mount:
-    name: "/sys/firmware/efi/efivars"
-    src: "efivarfs" 
-    fstype: "efivarfs"
-    state: "mounted"
+  set_fact: sys_partuuid={{ value.stdout }}
+  when: value.rc == 0
 
 - name: Install bootloader
   command: bootctl install
@@ -27,10 +20,9 @@
 - name: Install arch_lts entry
   template: src=templates/arch_lts_entry.j2 dest=/boot/loader/entries/arch-lts.conf
 
-- name: Remove efivars
-  mount:
-    name: "/sys/firmware/efi/efivars"
-    src: "efivarfs" 
-    fstype: "efivarfs"
-    state: "absent"
-  ignore_errors: yes
+  #- name: Remove efivars
+  #  mount:
+  #    name: "/sys/firmware/efi/efivars"
+  #    src: "efivarfs"
+  #    fstype: "efivarfs"
+  #    state: "unmounted"
