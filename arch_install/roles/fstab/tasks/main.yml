@@ -1,5 +1,8 @@
 ---
 
+- name: Gather fact
+  setup:
+
 - name: Create fstab file from ansible_mounts
   mount:
     name: "{{ item.mount }}"

@@ -1,9 +1,9 @@
 ---
 
 - name: pacstrap on host
-  command: "pacstrap /mnt base base-devel btrfs-progs ansible git intel-ucode linux-lts"
+  command: "pacstrap /mnt base base-devel btrfs-progs ansible intel-ucode linux-lts snapper"
   when: ansible_virtualization_role == 'host'
 
 - name: pacstrap on guest
-  command: "pacstrap -c /mnt base base-devel btrfs-progs ansible git intel-ucode linux-lts"
+  command: "pacstrap -c /mnt base base-devel btrfs-progs ansible intel-ucode linux-lts snapper"
   when: ansible_virtualization_role == 'guest'

@@ -25,12 +25,20 @@
     opts: "subvol=ROOT,defaults,noatime,ssd,compress=lzo"
     state: "mounted"
 
-- name: Mount system partition
+- name: Mount home partition
   mount:
     name: "/mnt/home"
     src: "{{ disk_dev }}2"
     fstype: "btrfs"
     opts: "subvol=home,defaults,noatime,ssd,compress=lzo"
+    state: "mounted"
+
+- name: Mount snapshots partition
+  mount:
+    name: "/mnt/snapshots"
+    src: "{{ disk_dev }}2"
+    fstype: "btrfs"
+    opts: "subvol=snapshots,defaults,noatime,ssd,compress=lzo"
     state: "mounted"
 
 - name: Mount boot partition
