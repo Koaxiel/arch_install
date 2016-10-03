@@ -7,7 +7,7 @@
 
 - name: ensure nvim directory exists
   file:
-    path: "/home/{{ username }}/.config/nvim/{{ item }}"
+    path: "{{ ansible_env.HOME }}/.config/nvim/{{ item }}"
     recurse: yes
     state: directory
   with_items:
@@ -17,23 +17,23 @@
 - name: install config file
   copy:
     src: files/init.vim
-    dest: "/home/{{ username }}/.config/nvim/init.vim"
-    owner: "{{ username }}"
+    dest: "{{ ansible_env.HOME }}/.config/nvim/init.vim"
+    owner: "{{ ansible_env.USER }}"
     group: users
     mode: 0644
 
 - name: install colors scheme
   copy:
     src: files/molokai.vim
-    dest: "/home/{{ username }}/.config/nvim/colors/molokai.vim"
-    owner: "{{ username }}"
+    dest: "{{ ansible_env.HOME }}/.config/nvim/colors/molokai.vim"
+    owner: "{{ ansible_env.USER }}"
     group: users
     mode: 0644
 
 - name: install vim-plug
   copy:
     src: files/plug.vim
-    dest: "/home/{{ username }}/.config/nvim/autoload/plug.vim"
-    owner: "{{ username }}"
+    dest: "{{ ansible_env.HOME }}/.config/nvim/autoload/plug.vim"
+    owner: "{{ ansible_env.USER }}"
     group: users
     mode: 0644
