@@ -1,7 +1,7 @@
 ---
 
 - name: install system tools
-  pacman: 
+  pacman:
     name: "{{ item }}"
     state: present
   with_items:
@@ -9,13 +9,14 @@
     - vim-colorsamplerpack
     - vim-airline
     - zsh-syntax-highlighting
+  become: true
 
 - name: setup zsh
   copy:
     src: files/zshrc
     dest: "/home/{{ username }}/.zshrc"
-    owner: "{{ username }}" 
-    group: users 
+    owner: "{{ username }}"
+    group: users
     mode: 0644
 
 - name: setup zsh for root

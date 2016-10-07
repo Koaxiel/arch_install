@@ -1,12 +1,17 @@
 ---
 
 - hosts: localhost
-  user: root
+  connection: local
 
-  vars_prompt:
-    - name: "user_password"
-      prompt: "Enter the user password"
-      private: yes
+  #  vars_prompt:
+  #    - name: "user_password"
+  #      prompt: "Enter the user password"
+  #      private: yes
+
+  pre_tasks:
+    - fail:
+        msg: "'username' or 'user_password' variable is not defined"
+      when: username is undefined or user_password is undefined
 
   roles:
     - { role: user, username: "{{ username }}", tags: user }
