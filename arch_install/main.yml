@@ -47,11 +47,19 @@
    - { role: bootloader, tags: bootloader }
   # - { role: network, tags: network }
 
-  #  tasks:
-  #    - name: Set root's password
-  #      user: name=root password={{ root_password |password_hash('sha512') }}
-  #      tags: root
+  tasks:
+    - name: Set root's password
+      user: name=root password={{ root_password |password_hash('sha512') }}
+      tags: root
 
+    - block:
+      - name: Enable sshd
+        service: name=sshd enabled=yes
+
+      - name: Enable dhcpcd
+        service: name=dhcpcd enabled=yes
+
+      when: ansible_virtualization_role == 'guest'
   #- hosts: localhost
   #  user: root
   #  connection: local

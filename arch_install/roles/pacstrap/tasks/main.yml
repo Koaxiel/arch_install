@@ -4,6 +4,17 @@
   command: "pacstrap /mnt base base-devel btrfs-progs ansible intel-ucode linux-lts snapper"
   when: ansible_virtualization_role == 'host'
 
-- name: pacstrap on guest
-  command: "pacstrap -c /mnt base base-devel btrfs-progs ansible intel-ucode linux-lts snapper"
+- block:
+  - name: pacstrap on guest
+    command: "pacstrap -c /mnt base base-devel btrfs-progs ansible intel-ucode linux-lts snapper openssh"
+
+  - name: Create ssh directory
+    file: path=/mnt/root/.ssh state=directory
+
+  - name: Copy ssh authorized_keys
+    copy:
+      src: "/root/.ssh/authorized_keys"
+      dest: "/mnt/root/.ssh/authorized_keys"
+      remote_src: true
+
   when: ansible_virtualization_role == 'guest'
