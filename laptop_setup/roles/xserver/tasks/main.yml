@@ -5,19 +5,19 @@
     name: "{{ item }}"
     state: present
   with_items:
-    - xf86-video-intel 
-    - libva-intel-driver 
+    - xf86-video-intel
+    - libva-intel-driver
     - xf86-input-libinput
 
 - name: locale x11
-  command: "localectl set-keymap fr-latin9"
+  command: "localectl set-x11-keymap fr pc105 latin9 terminate:ctrl_alt_bksp"
 
-- name: add 10-monitor.conf 
+- name: add 10-monitor.conf
   copy:
-    src: files/10-monitor.conf 
+    src: files/10-monitor.conf
     dest: "/etc/X11/xorg.conf.d/10-monitor.conf"
 
 - name: add 30-touchpad.conf
   copy:
-    src: files/30-touchpad.conf 
+    src: files/30-touchpad.conf
     dest: "/etc/X11/xorg.conf.d/30-touchpad.conf"

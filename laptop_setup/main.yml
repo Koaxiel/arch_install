@@ -13,6 +13,9 @@
         msg: "'username' or 'user_password' variable is not defined"
       when: username is undefined or user_password is undefined
 
+    - debug:
+        msg: "User {{ ansible_env.USER }}"
+
   roles:
     - { role: user, username: "{{ username }}", tags: user }
     - { role: base, tags: base }
@@ -25,5 +28,5 @@
     - { role: smart, tags: smart }
     - { role: xserver, tags: xserver }
     - { role: xapp, tags: xapp }
-    - { role: aurutils, tags: aurutils }
-    - { role: dirty, tags: dirty }
+      #- { role: aurutils, tags: aurutils }
+      #- { role: dirty, tags: dirty }
