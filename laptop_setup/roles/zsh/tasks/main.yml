@@ -1,0 +1,24 @@
+---
+- name: Install zsh
+  pacman:
+    name: zsh-syntax-highlighting
+    state: present
+    update_cache: yes
+
+- name: Create zshrc for "{{ username }}"
+  copy:
+    src: files/zshrc
+    dest: "/home/{{ username }}/.zshrc"
+    owner: "{{ username }}"
+    group: users
+    mode: 0644
+
+- name: Create zshrc for root
+  copy:
+    src: files/zshrc
+    dest: "/root/.zshrc"
+
+- name: Setup zsh as VT for root user
+  user:
+    name: root
+    shell: /bin/zsh

@@ -2,29 +2,16 @@
 
 - name: visudo
   replace: >
-    dest=/etc/sudoers 
+    dest=/etc/sudoers
     regexp='^.*wheel.*NOPASSWD.*$'
-    replace='%wheel ALL=(ALL) NOPASSWD:ALL' 
+    replace='%wheel ALL=(ALL) NOPASSWD:ALL'
     validate='visudo -cf %s'
-
-- name: ntp 
-  command: "timedatectl set-ntp true"
-
-- name: locale
-  command: >
-    localectl set-locale
-    LANG=en_US.UTF-8
-    LC_NUMERIC=fr_FR.UTF-8
-    LC_TIME=fr_FR.UTF-8
-    LC_MONETARY=fr_FR.UTF-8
-    LC_PAPER=fr_FR.UTF-8
-    LC_MEASUREMENT=fr_FR.UTF-8
 
 - name: pacman color
   replace:
-    dest: /etc/pacman.conf 
+    dest: /etc/pacman.conf
     regexp: '^.*Color.*$'
-    replace: 'Color' 
+    replace: 'Color'
 
 - name: pacman.conf Seblu
   blockinfile:
@@ -35,6 +22,6 @@
       [seblu]
       Server = http://seblu.net/a/$repo/$arch
       SigLevel = Required TrustedOnly
-    marker: "# {mark} ANSIBLE MANAGED BLOCK Seblu"
-  notify: 
+    marker: "# {mark} ANSIBLE MANAGED BLOCK Add Seblu's repo"
+  notify:
     - pacman update

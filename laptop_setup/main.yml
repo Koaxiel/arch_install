@@ -1,25 +1,28 @@
 ---
 
 - hosts: localhost
-  connection: local
 
   #  vars_prompt:
   #    - name: "user_password"
   #      prompt: "Enter the user password"
   #      private: yes
+  vars:
+    username: "{{ ansible_env.USER }}"
 
   pre_tasks:
     - fail:
         msg: "'username' or 'user_password' variable is not defined"
-      when: username is undefined or user_password is undefined
+      when:
+        - ansible_env.USER == 'root'
+        - username is undefined or user_password is undefined
 
     - debug:
-        msg: "User {{ ansible_env.USER }}"
+        msg: "User is {{ username }}"
 
   roles:
-    - { role: user, username: "{{ username }}", tags: user }
-    - { role: base, tags: base }
-    - { role: systool, tags: systool }
+    - { role: user, tags: user, when: user_password is defined }
+    - { role: base, tags: base, become: true }
+    - { role: zsh, tags: zsh, become: true }
     - { role: nvim, tags: nvim }
     - { role: gpg, tags: gpg }
     - { role: nettool, tags: nettool }

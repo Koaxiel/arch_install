@@ -1,7 +1,7 @@
 ---
 
 - name: "Create user {{ username }}"
-  user: 
+  user:
     name: "{{ username }}"
     shell: /bin/zsh
     group: users
