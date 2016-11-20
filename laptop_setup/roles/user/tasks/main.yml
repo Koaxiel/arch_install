@@ -7,3 +7,4 @@
     group: users
     groups: wheel
     password: "{{ user_password |password_hash('sha512') }}"
+    update_password: on_create

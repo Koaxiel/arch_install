@@ -13,15 +13,14 @@
     regexp: '^.*Color.*$'
     replace: 'Color'
 
-- name: pacman.conf Seblu
-  blockinfile:
-    dest: /etc/pacman.conf
-    insertafter: EOF
-    block: |
+- name: /etc/systemd/logind.conf
+  lineinfile:
+    dest: /etc/systemd/logind.conf
+    state: present
+    line: 'KillUserProcesses=yes'
 
-      [seblu]
-      Server = http://seblu.net/a/$repo/$arch
-      SigLevel = Required TrustedOnly
-    marker: "# {mark} ANSIBLE MANAGED BLOCK Add Seblu's repo"
-  notify:
-    - pacman update
+- name: /etc/systemd/system.conf
+  lineinfile:
+    dest: /etc/systemd/system.conf
+    state: present
+    line: 'RuntimeWatchdogSec=20'
