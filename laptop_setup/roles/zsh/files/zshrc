@@ -45,7 +45,7 @@ alias sr='ssh -l root'
 
 ## export
 eval `dircolors -b`
-export EDITOR=/usr/bin/vim
+export EDITOR=/usr/bin/nvim
 export GREP_COLOR='1;31'
 
 #export GPGKEY=9C926E1A

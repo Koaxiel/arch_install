@@ -3,7 +3,6 @@
   pacman:
     name: zsh-syntax-highlighting
     state: present
-    update_cache: yes
 
 - name: Create zshrc for "{{ username }}"
   copy:
