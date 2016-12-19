@@ -20,7 +20,7 @@ set $mod Mod4
 # right-to-left text rendering, you should instead use pango for rendering and
 # chose a FreeType font, such as:
 # font pango:DejaVu Sans Mono 10
-font pango:Droid Sans Bold 11px
+font pango:Droid Sans Bold 8
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -33,13 +33,18 @@ bindsym $mod+c kill
 
 # start dmenu (a program launcher)
 #bindsym $mod+d exec dmenu_run
-bindcode 49 exec --no-startup-id rofi -show combi 
+bindcode 49 exec --no-startup-id rofi -show combi
+bindcode $mod+49 exec --no-startup-id rofi -show ssh
 #bindcode 49 exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -i -nb '#000000' -nf '#aaaaaa' -sf '#1e90ff' -sb '#000000' -h 18  -fn 'Droid Sans:pixelsize=11:Bold'"
 #bindsym $mod+p exec --no-startup-id passmenu -i -nb '#000000' -nf '#aaaaaa' -sf '#1e90ff' -sb '#000000' -h 18  -fn 'Droid Sans:pixelsize=11:Bold'
 bindsym $mod+Tab exec --no-startup-id rofi -show window
 bindsym $mod+e exec --no-startup-id nautilus -w
-bindsym $mod+Control+l exec --no-startup-id i3lock -e -d -f -c 000000
+bindsym $mod+Control+l exec --no-startup-id i3lock -e -f -c 000000
 #bindsym $mod+Control+q exec --no-startup-id gnome-session-quit --logout
+
+bindsym XF86AudioPlay exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
+bindsym XF86AudioPrev exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
+bindsym XF86AudioNext exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
 
 bindsym XF86AudioMute exec "pactl set-sink-mute 1 toggle; killall -USR1 i3status"
 bindsym XF86AudioLowerVolume exec "pactl set-sink-mute 1 false; pactl set-sink-volume 1 -5%; killall -USR1 i3status"
@@ -79,6 +84,12 @@ bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
+
+# move workspace to output:
+bindsym $mod+Control+Left move workspace to output left
+bindsym $mod+Control+Down move workspace to output down
+bindsym $mod+Control+Up move workspace to output up
+bindsym $mod+Control+Right move workspace to output right
 
 # split in horizontal orientation
 bindsym $mod+h split h
@@ -174,6 +185,7 @@ bar {
         position top
         status_command i3status
         #tray_output primary
+        #tray_output eDP1
         colors {
             background #000000
             statusline #1e90ff
@@ -199,6 +211,8 @@ force_display_urgency_hint 500 ms
 
 #assign
 assign [class="Thunderbird"] → 1
+for_window [class="Spotify" instance="spotify"] move to workspace Spotify
+for_window [class="Slack" instance="slack"] move to workspace Slack
 assign [class="Pidgin"] → 9
 
 #exec nautilus -n
