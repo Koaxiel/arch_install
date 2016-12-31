@@ -19,6 +19,8 @@
   with_items:
     - "/home/{{ username }}/.config/i3"
     - "/home/{{ username }}/.config/i3status"
+  become: true
+  become_user: '{{ username }}'
 
 - name: configure i3
   copy:
@@ -27,11 +29,15 @@
     owner: "{{ username }}"
     group: users
     mode: 0644
+  become: true
+  become_user: '{{ username }}'
 
 - name: configure i3status
   copy:
     src: files/i3status.conf
-    dest: "/home/{{ username }}/config/i3status/config"
+    dest: "/home/{{ username }}/.config/i3status/config"
     owner: "{{ username }}"
     group: users
     mode: 0644
+  become: true
+  become_user: '{{ username }}'
