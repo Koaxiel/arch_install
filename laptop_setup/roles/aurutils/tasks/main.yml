@@ -26,7 +26,7 @@
         become_user: '{{ username }}'
 
       - name: Build package
-        command: makepkg -s --noconfirm -L --holdver -i
+        command: makepkg -crs --noconfirm -L --holdver -i
         args:
           chdir: /tmp/aurutils
         become: true
@@ -71,3 +71,10 @@
     update_cache: yes
     upgrade: yes
   become: true
+
+- name: Add aurutils in custom repo
+  command: aursync -cu --no-view aurutils
+  args:
+    creates: '{{ ansible_user_dir }}/.cache/aursync/aurutils/PKGBUILD'
+  become: true
+  become_user: '{{ username }}'
