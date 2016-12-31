@@ -1,5 +1,11 @@
 ---
 # tasks file for aurutils
+- name: Install optional dependencies
+  pacman:
+    name: devtools
+    state: present
+  become: true
+
 - block:
   - name: Check if aurutils is installed
     pacman:
@@ -46,6 +52,7 @@
   file:
     path: /var/cache/pacman/custom
     owner: '{{ username }}'
+    mode: 0700
     state: directory
   become: true
 
@@ -54,6 +61,7 @@
   args:
     creates: /var/cache/pacman/custom/custom.db.tar
   become: true
+  become_user: '{{ username }}'
 
 - name: Synchronize pacman
   pacman:
