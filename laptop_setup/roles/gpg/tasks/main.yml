@@ -9,17 +9,31 @@
     - pcsc-tools
     - ccid
     - libusb-compat
+  become: true
+
+- name: create .gnupg folder
+  file:
+    path: '{{ ansible_user_dir }}/.gnupg'
+    owner: '{{ username }}'
+    group: users
+    state: directory
+    mode: 0755
+  become: true
+  become_user: '{{ username }}'
 
 - name: setup gpg-agent
   copy:
     src: files/gpg-agent.conf
-    dest: "{{ ansible_env.HOME }}/.gnupg/gpg-agent.conf"
-    owner: "{{ ansible_env.USER }}"
+    dest: "{{ ansible_user_dir }}/.gnupg/gpg-agent.conf"
+    owner: "{{ username }}"
     group: users
     mode: 0644
+  become: true
+  become_user: '{{ username }}'
 
 - name: enable pcscd
   service:
     name: pcscd
     enabled: yes
     state: started
+  become: true

@@ -1,10 +1,12 @@
 ---
-
 - name: install gnome
   pacman: name=gnome state=present
+  become: true
 
 - name: install gnome-extra
   pacman: name=gnome-extra state=present
+  become: true
 
 - name: enable gdm
   service: name=gdm enabled=yes
+  become: true

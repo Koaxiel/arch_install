@@ -8,18 +8,22 @@
     - xf86-video-intel
     - libva-intel-driver
     - xf86-input-libinput
+  become: true
 
 - name: 00-keyboard.conf
   copy:
     src: files/00-keyboard.conf
     dest: "/etc/X11/xorg.conf.d/00-keyboard.conf"
+  become: true
 
 - name: 10-monitor.conf
   copy:
     src: files/10-monitor.conf
     dest: "/etc/X11/xorg.conf.d/10-monitor.conf"
+  become: true
 
 - name: 30-touchpad.conf
   copy:
     src: files/30-touchpad.conf
     dest: "/etc/X11/xorg.conf.d/30-touchpad.conf"
+  become: true

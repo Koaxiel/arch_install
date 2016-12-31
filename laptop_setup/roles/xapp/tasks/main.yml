@@ -1,53 +1,52 @@
 ---
 
-- name: install xapp 
+- name: install xapp
   pacman:
-    name: "{{ item }}"
+    name: '{{ item }}'
     state: present
   with_items:
     - htop
     - network-manager-applet
     - mpv
-    - livestreamer
     - firefox
     - libreoffice-fresh
     - rxvt-unicode
     - ttf-droid
     - rofi
+  become: true
 
 - name: install urxvt-vtwheel
   copy:
-    src: "files/vtwheel"
-    dest: "/usr/lib/urxvt/perl/vtwheel" 
+    src: files/vtwheel
+    dest: /usr/lib/urxvt/perl/vtwheel
+  become: true
 
 - name: setup urxvt
   copy:
     src: files/Xresources
-    dest: "/home/{{ username }}/.Xresources"
-    owner: "{{ username }}" 
-    group: users 
+    dest: '{{ ansible_user_dir }}/.Xresources'
+    owner: '{{ username }}'
+    group: users
     mode: 0644
+  become: true
+  become_user: '{{ username }}'
 
 - name: create .mpv folder
   file:
-    path: "/home/{{ username }}/.mpv"
-    owner: "{{ username }}" 
-    group: users 
+    path: '{{ ansible_user_dir }}/.mpv'
+    owner: '{{ username }}'
+    group: users
     state: directory
     mode: 0755
+  become: true
+  become_user: '{{ username }}'
 
 - name: config mpv
   copy:
     src: files/mpv
-    dest: "/home/{{ username }}/.mpv/config"
-    owner: "{{ username }}" 
-    group: users 
+    dest: '{{ ansible_user_dir }}/.mpv/config'
+    owner: '{{ username }}'
+    group: users
     mode: 0644
-
-- name: config livestreamer
-  copy:
-    src: files/livestreamerrc
-    dest: "/home/{{ username }}/.livestreamerrc"
-    owner: "{{ username }}" 
-    group: users 
-    mode: 0644
+  become: true
+  become_user: '{{ username }}'

@@ -2,7 +2,7 @@
 
 - name: install i3
   pacman:
-    name: "{{ item }}"
+    name: '{{ item }}'
     state: present
   with_items:
     - i3
@@ -11,22 +11,22 @@
 
 - name: create .i3 folder
   file:
-    path: "{{ item }}"
-    owner: "{{ username }}"
+    path: '{{ item }}'
+    owner: '{{ username }}'
     group: users
     state: directory
     mode: 0755
   with_items:
-    - "/home/{{ username }}/.config/i3"
-    - "/home/{{ username }}/.config/i3status"
+    - '{{ ansible_user_dir }}/.config/i3'
+    - '{{ ansible_user_dir }}/.config/i3status'
   become: true
   become_user: '{{ username }}'
 
 - name: configure i3
   copy:
     src: files/config
-    dest: "/home/{{ username }}/.config/i3/config"
-    owner: "{{ username }}"
+    dest: '{{ ansible_user_dir }}/.config/i3/config'
+    owner: '{{ username }}'
     group: users
     mode: 0644
   become: true
@@ -35,8 +35,8 @@
 - name: configure i3status
   copy:
     src: files/i3status.conf
-    dest: "/home/{{ username }}/.config/i3status/config"
-    owner: "{{ username }}"
+    dest: '{{ ansible_user_dir }}/.config/i3status/config'
+    owner: '{{ username }}'
     group: users
     mode: 0644
   become: true

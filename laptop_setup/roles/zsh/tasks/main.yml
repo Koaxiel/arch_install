@@ -3,21 +3,26 @@
   pacman:
     name: zsh-syntax-highlighting
     state: present
+  become: true
 
-- name: Create zshrc for "{{ username }}"
+- name: Create zshrc for {{ username }}
   copy:
     src: files/zshrc
-    dest: "/home/{{ username }}/.zshrc"
-    owner: "{{ username }}"
+    dest: "{{ ansible_user_dir }}/.zshrc"
+    owner: '{{ username }}'
     group: users
     mode: 0644
+  become: true
+  become_user: '{{ username }}'
 
 - name: Create zshrc for root
   copy:
     src: files/zshrc
     dest: "/root/.zshrc"
+  become: true
 
 - name: Setup zsh as VT for root user
   user:
     name: root
     shell: /bin/zsh
+  become: true

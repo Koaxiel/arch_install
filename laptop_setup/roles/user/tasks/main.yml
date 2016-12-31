@@ -1,10 +1,15 @@
 ---
-
-- name: "Create user {{ username }}"
+- name: Create user {{ username }}
   user:
-    name: "{{ username }}"
+    name: '{{ username }}'
     shell: /bin/zsh
     group: users
     groups: wheel
     password: "{{ user_password |password_hash('sha512') }}"
     update_password: on_create
+  become: true
+
+- name: Setup with {{ username }}
+  setup:
+  become: true
+  become_user: '{{ username }}'

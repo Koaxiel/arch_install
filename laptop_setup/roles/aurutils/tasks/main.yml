@@ -1,9 +1,12 @@
 ---
 # tasks file for aurutils
-- name: Install optional dependencies
+- name: Install dependencies
   pacman:
-    name: devtools
+    name: '{{ item }}'
     state: present
+  with_items:
+    - devtools
+    - git
   become: true
 
 - block:

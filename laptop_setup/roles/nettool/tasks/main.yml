@@ -2,7 +2,7 @@
 
 - name: install network tools
   pacman:
-    name: "{{ item }}"
+    name: '{{ item }}'
     state: present
   with_items:
     - sipcalc
@@ -15,3 +15,4 @@
     - openssh
     - iperf3
     - iw
+  become: true
