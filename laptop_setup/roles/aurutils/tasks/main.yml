@@ -1,2 +1,31 @@
 ---
 # tasks file for aurutils
+- block:
+  - name: Check if aurutils is installed
+    pacman:
+      name: aurutils
+      state: present
+    become: true
+
+  rescue:
+    - block:
+      - name: Download source
+        git:
+          repo: https://aur.archlinux.org/aurutils.git
+          dest: /tmp/aurutils
+        become: true
+        become_user: '{{ username }}'
+
+      - name: Build package
+        command: makepkg -s --noconfirm -L --holdver -i
+        args:
+          chdir: /tmp/aurutils
+        become: true
+        become_user: '{{ username }}'
+
+  always:
+  - name: Re-Check if aurutils is installed
+    pacman:
+      name: aurutils
+      state: present
+    become: true
