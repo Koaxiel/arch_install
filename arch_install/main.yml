@@ -58,7 +58,6 @@
 
       - name: Enable dhcpcd
         service: name=dhcpcd enabled=yes
-
       when: ansible_virtualization_role == 'guest'
   #- hosts: localhost
   #  user: root

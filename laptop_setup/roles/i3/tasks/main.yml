@@ -41,3 +41,16 @@
     mode: 0644
   become: true
   become_user: '{{ username }}'
+
+- name: Build xsettingsd-git
+  command: aursync -cu --no-view xsettingsd-git
+  args:
+    creates: '{{ ansible_user_dir }}/.cache/aursync/xsettingsd-git/PKGBUILD'
+  become: true
+  become_user: '{{ username }}'
+
+- name: Install xsettingsd-git
+  pacman:
+    name: xsettingsd-git
+    state: present
+    update: yes

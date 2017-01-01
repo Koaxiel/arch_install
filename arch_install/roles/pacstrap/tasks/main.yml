@@ -1,4 +1,6 @@
 ---
+- name: Refresh gpgp keys
+  command: pacman-key --refresh-keys
 
 - name: pacstrap on host
   command: "pacstrap /mnt base base-devel btrfs-progs ansible intel-ucode linux-lts snapper"

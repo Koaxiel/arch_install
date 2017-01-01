@@ -2,13 +2,17 @@
 
 - name: Gather fact
   setup:
+  register: result
+
+- debug:
+    var: result
 
 - name: Create fstab file from ansible_mounts
   mount:
     name: "{{ item.mount }}"
     src: "UUID={{ item.uuid }}"
     fstype: "{{ item.fstype }}"
-    opts: "{{ item.options }}"
+    opts: "{{ item.options|replace(',bind', '') }}"
     dump: '0'
     passno: "{{ '2' if item.mount == '/boot' else '0' }}"
     state: "present"
