@@ -1,7 +1,4 @@
 ---
-- name: Refresh gpgp keys
-  command: pacman-key --refresh-keys
-
 - name: pacstrap on host
   command: "pacstrap /mnt base base-devel btrfs-progs ansible intel-ucode linux-lts snapper"
   when: ansible_virtualization_role == 'host'
@@ -18,5 +15,7 @@
       src: "/root/.ssh/authorized_keys"
       dest: "/mnt/root/.ssh/authorized_keys"
       remote_src: true
-
   when: ansible_virtualization_role == 'guest'
+
+- name: Refresh pacman gpg keys
+  command: pacman-key --refresh-keys --config /mnt/etc/pacman.conf --gpgdir /mnt/etc/pacman.d/gnupg

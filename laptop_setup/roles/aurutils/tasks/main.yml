@@ -73,8 +73,8 @@
   become: true
 
 - name: Add aurutils in custom repo
-  command: aursync -cu --no-view aurutils
+  command: aursync -c --no-view aurutils
   args:
-    creates: '{{ ansible_user_dir }}/.cache/aursync/aurutils/PKGBUILD'
+    creates: '/var/cache/pacman/custom/aurutils*'
   become: true
   become_user: '{{ username }}'

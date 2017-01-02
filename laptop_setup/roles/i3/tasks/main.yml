@@ -43,15 +43,39 @@
   become_user: '{{ username }}'
 
 - name: Build xsettingsd-git
-  command: aursync -cu --no-view xsettingsd-git
+  command: 'aursync -c --no-view {{ item }}'
   args:
-    creates: '{{ ansible_user_dir }}/.cache/aursync/xsettingsd-git/PKGBUILD'
+    creates: '/var/cache/pacman/custom/{{ item }}*'
   become: true
   become_user: '{{ username }}'
+  with_items:
+    - xsettingsd-git
 
-- name: Install xsettingsd-git
+- name: Build paper-icon-theme-git
+  command: 'aursync -c --no-view {{ item }}'
+  args:
+    creates: '/var/cache/pacman/custom/{{ item }}*'
+  become: true
+  become_user: '{{ username }}'
+  with_items:
+    - paper-icon-theme-git
+
+- name: Build adapta-gtk-theme
+  command: 'aursync -c --no-view {{ item }}'
+  args:
+    creates: '/var/cache/pacman/custom/{{ item }}*'
+  become: true
+  become_user: '{{ username }}'
+  with_items:
+    - adapta-gtk-theme
+
+- name: Install package
   pacman:
-    name: xsettingsd-git
+    name: '{{ item }}'
     state: present
     update_cache: yes
   become: true
+  with_items:
+    - xsettingsd-git
+    - paper-icon-theme-git
+    - adapta-gtk-theme
