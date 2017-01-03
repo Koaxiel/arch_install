@@ -21,10 +21,10 @@
     - { role: zsh, tags: zsh }
     - { role: nvim, tags: nvim }
     - { role: gpg, tags: gpg }
-    - { role: nettool, tags: nettool }
-    - { role: i3, tags: i3 }
-    - { role: gnome, tags: gnome }
     - { role: smart, tags: smart }
+    - { role: gnome, tags: gnome }
     - { role: xserver, tags: xserver }
+    - { role: nettool, tags: nettool }
     - { role: xapp, tags: xapp }
+    - { role: i3, tags: i3 }
       #- { role: dirty, tags: dirty }

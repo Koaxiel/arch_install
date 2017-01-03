@@ -10,6 +10,13 @@
     - xf86-input-libinput
   become: true
 
+
+- name: ensure xorg.conf.d directory exists
+  file:
+    path: "/etc/X11/xorg.conf.d"
+    state: directory
+  become: true
+
 - name: 00-keyboard.conf
   copy:
     src: files/00-keyboard.conf
