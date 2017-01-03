@@ -69,6 +69,15 @@
   with_items:
     - adapta-gtk-theme
 
+- name: Build py3status
+  command: 'aursync -c --no-view {{ item }}'
+  args:
+    creates: '/var/cache/pacman/custom/{{ item }}*'
+  become: true
+  become_user: '{{ username }}'
+  with_items:
+    - py3status
+
 - name: Install package
   pacman:
     name: '{{ item }}'
@@ -79,3 +88,15 @@
     - xsettingsd-git
     - paper-icon-theme-git
     - adapta-gtk-theme
+    - py3status
+
+- name: configure xsettingsd
+  copy:
+    src: files/xsettingsd
+    dest: '{{ ansible_user_dir }}/.xsettingsd'
+    owner: '{{ username }}'
+    group: users
+    mode: 0644
+  become: true
+  become_user: '{{ username }}'
+

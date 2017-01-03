@@ -5,14 +5,16 @@ vo=opengl
 hwdec=vaapi
 
 # Write your default config options here!
-softvol=yes
-softvol-max=1000
+volume-max=1000
 
 # Display French subtitles if available.
 slang = fr
 
 # Subtitle
-sub-text-color="#ffffffff"                                                     
-sub-text-border-color="#f0000000"
+sub-color="#ffffffff"
+sub-border-color="#f0000000"
+sub-codepage=utf8:cp1256
+
+cache=8192
 
 save-position-on-quit
