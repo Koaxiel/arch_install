@@ -39,7 +39,33 @@
 
 - meta: flush_handlers
 
-  #- name: setup gtk3
-  #  copy:
-  #    src:
-  #    dest:
+- name: ensure dconf/user.d directory exists
+  file:
+    path: '{{ ansible_user_dir }}/.config/gtk-3.0'
+    recurse: yes
+    state: directory
+  become: true
+  become_user: '{{ username }}'
+
+- name: setup gtk-3.0
+  copy:
+    src: 'files/{{ item }}'
+    dest: '{{ ansible_user_dir }}/.config/gtk-3.0/{{ item }}'
+    owner: '{{ username }}'
+    group: users
+    mode: 0644
+  become: true
+  become_user: '{{ username }}'
+  with_items:
+    - bookmarks
+    - settings.ini
+
+- name: setup gtk-2.0
+  copy:
+    src: 'files/gtkrc-2.0'
+    dest: '{{ ansible_user_dir }}/.gtkrc-2.0'
+    owner: '{{ username }}'
+    group: users
+    mode: 0644
+  become: true
+  become_user: '{{ username }}'

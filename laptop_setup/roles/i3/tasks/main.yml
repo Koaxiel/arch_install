@@ -42,14 +42,14 @@
   become: true
   become_user: '{{ username }}'
 
-- name: Build xsettingsd-git
-  command: 'aursync -c --no-view {{ item }}'
-  args:
-    creates: '/var/cache/pacman/custom/{{ item }}*'
-  become: true
-  become_user: '{{ username }}'
-  with_items:
-    - xsettingsd-git
+  #- name: Build xsettingsd-git
+  #  command: 'aursync -c --no-view {{ item }}'
+  #  args:
+  #    creates: '/var/cache/pacman/custom/{{ item }}*'
+  #  become: true
+  #  become_user: '{{ username }}'
+  #  with_items:
+  #    - xsettingsd-git
 
 - name: Build paper-icon-theme-git
   command: 'aursync -c --no-view {{ item }}'
@@ -85,18 +85,17 @@
     update_cache: yes
   become: true
   with_items:
-    - xsettingsd-git
     - paper-icon-theme-git
     - adapta-gtk-theme
     - py3status
+#    - xsettingsd-git
 
-- name: configure xsettingsd
-  copy:
-    src: files/xsettingsd
-    dest: '{{ ansible_user_dir }}/.xsettingsd'
-    owner: '{{ username }}'
-    group: users
-    mode: 0644
-  become: true
-  become_user: '{{ username }}'
-
+#- name: configure xsettingsd
+#  copy:
+#    src: files/xsettingsd
+#    dest: '{{ ansible_user_dir }}/.xsettingsd'
+#    owner: '{{ username }}'
+#    group: users
+#    mode: 0644
+#  become: true
+#  become_user: '{{ username }}'

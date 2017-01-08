@@ -1,4 +1,3 @@
-Gtk/ColorPalette "black:white:gray50:red:purple:blue:light blue:green:yellow:orange:lavender:brown:goldenrod4:dodger blue:pink:light green:gray10:gray30:gray75:gray90"
 Gtk/CursorThemeName "Paper"
 Gtk/FontName "Droid Sans 8"
 Net/FallbackIconTheme "gnome"
