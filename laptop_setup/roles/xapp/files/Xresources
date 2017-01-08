@@ -1,52 +1,52 @@
 URxvt.letterSpace           : -1
 URxvt.depth                 : 32
 
-URxvt.background            : [80]#1C1C1C
-URxvt.foreground            : #d0d0d0
+URxvt.background            : #121212
+URxvt.foreground            : #D0D0D0
 
-URxvt.cursorColor           : #1e90ff
+URxvt.cursorColor           : #FF4500
 
-URxvt.colorBD               : #3579a8
-URxvt.colorUL               : #4eb4fa
+URxvt.colorBD               : #1E90FF
+URxvt.colorUL               : #1E90FF
 
 !black
-URxvt.color0                : #000000
-URxvt.color8                : #1c1c1c
+URxvt.color0                : #121212
+URxvt.color8                : #1C1C1C
 
 !red
 URxvt.color1                : #960050
-URxvt.color9                : #ff0090
+URxvt.color9                : #F92672
 
 !green
-URxvt.color2                : #66aa11
-URxvt.color10               : #80ff00
+URxvt.color2                : #008000
+URxvt.color10               : #0BDA51
 
 !yellow
-URxvt.color3                : #c47f2c
-URxvt.color11               : #ffba68
+URxvt.color3                : #FF4500
+URxvt.color11               : #E6DB74
 
 !blue
-URxvt.color4                : #30309b
-URxvt.color12               : #5f5fee
+URxvt.color4                : #005A9C
+URxvt.color12               : #1E90FF
 
 !magenta
-URxvt.color5                : #7e40a5
-URxvt.color13               : #bb88dd
+URxvt.color5                : #800080
+URxvt.color13               : #9966CC
 
 !cyan
 URxvt.color6                : #3579a8
-URxvt.color14               : #1e90ff
-!URxvt.color14               : #4eb4fa
+!URxvt.color14               : #00CCCC
+URxvt.color14               : #1E90FF
 
 !white
-URxvt.color7                : #5f5f5f
-URxvt.color15               : #d0d0d0
+URxvt.color7                : #D0D0D0
+URxvt.color15               : #F8F8F2
 
 URxvt.colorBDMode           : true
 URxvt.colorULMode           : true
 
-URxvt.highlightColor        : #1c1c1c
-URxvt.highlightTextColor    : #ff0090
+URxvt.highlightColor        : #1C1C1C
+URxvt.highlightTextColor    : #FF0090
 
 URxvt.internalBorder        : 0
 URxvt.externalBorder        : 0
@@ -95,12 +95,13 @@ Xft.hinting                 : true
 Xft.hintstyle               : hintslight
 
 ! -- Fonts -- !
-URxvt.font: xft:Droid Sans Mono:pixelsize=11
-URxvt.boldFont: xft:Droid Sans Mono:pixelsize=11:bold
-URxvt.italicFont: xft:Droid Sans Mono:pixelsize=11:italic
-URxvt.boldItalicFont: xft:Droid Sans Mono:pixelsize=11:bold:italic
+URxvt.font: xft:Droid Sans Mono:size=6
+URxvt.boldFont: xft:Droid Sans Mono:size=6:bold
+URxvt.italicFont: xft:Droid Sans Mono:size=6:italic
+URxvt.boldItalicFont: xft:Droid Sans Mono:size=6:bold:italic
 
-Xcursor.theme: Adwaita
+Xcursor.theme: Paper
+!Xcursor.size: 32
 
 ! -- Rofi -- !
 
@@ -115,7 +116,7 @@ rofi.lines:                          15
 ! Number of columns
 rofi.columns:                        1
 ! Font to use
-rofi.font:                           Droid Sans Bold 11px
+rofi.font:                           Droid Sans Bold 18
 ! Color scheme for normal row
 !rofi.color-normal:                   #fdf6e3,#002b36,#eee8d5,#586e75,#eee8d5
 rofi.color-normal: argb:cc1c1c1c, #d0d0d0, argb:cc1c1c1c, #1c1c1c, #ff0090

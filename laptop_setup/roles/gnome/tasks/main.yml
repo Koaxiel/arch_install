@@ -34,6 +34,12 @@
     - interface.conf
     - keyboard.conf
     - nautilus.conf
+    - terminal.conf
     - touchpad.conf
 
 - meta: flush_handlers
+
+  #- name: setup gtk3
+  #  copy:
+  #    src:
+  #    dest:
