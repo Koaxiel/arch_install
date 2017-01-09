@@ -50,6 +50,11 @@ export EDITOR=/usr/bin/nvim
 export GREP_COLOR='1;31'
 
 #export GPGKEY=9C926E1A
+#export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+unset SSH_AGENT_PID
+if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+    export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"
+fi
 
 export WORDCHARS='*?_[]~=&;!#$%^(){}'
 
