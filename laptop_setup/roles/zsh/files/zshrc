@@ -47,7 +47,7 @@ alias vim='nvim'
 ## export
 eval `dircolors -b`
 export EDITOR=/usr/bin/nvim
-export GREP_COLOR='1;31'
+export GREP_COLORS='mt=1;31:sl=:cx=:fn=1;34:ln=1;35:bn=1;35:se=39'
 
 #export GPGKEY=9C926E1A
 #export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
