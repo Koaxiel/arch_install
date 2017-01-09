@@ -1,0 +1,106 @@
+# i3status configuration file.
+# see "man i3status" for documentation.
+
+# It is important that this file is edited as UTF-8.
+# The following line should contain a sharp s:
+# ß
+# If the above line is not correctly displayed, fix your editor first!
+
+general {
+        colors          = true
+        interval        = 5
+        color_good      = "#66aa11"
+        color_degraded  = "#ff4500"
+        color_bad       = "#ff0090"
+}
+
+order += "spotify"
+order += "disk /home"
+order += "sysdata"
+#order += "cpu_usage"
+#order += "run_watch DHCP"
+#order += "run_watch VPN"
+order += "battery 0"
+#order += "ipv6"
+#order += "wifi"
+order += "wireless wlp1s0"
+order += "ethernet enp0s20u1"
+order += "ethernet enp0s20u1u3i5"
+#order += "path_exists VPN"
+#order += "load"
+order += "tztime local"
+order += "volume master"
+
+wireless {{ }} {
+        format_up = "WiFi: %ip (%quality vers %essid)"
+        format_down = ""
+}
+
+ethernet {{ }} {
+        # if you use %speed, i3status requires root privileges
+        format_up = "Ether: %ip (%speed)"
+        format_down = ""
+}
+
+ethernet {{ }} {
+        # if you use %speed, i3status requires root privileges
+        format_up = "Ether: %ip (%speed)"
+        format_down = ""
+}
+
+battery 0 {
+        format = "%status %percentage %remaining"
+}
+
+run_watch DHCP {
+        pidfile = "/var/run/dhclient*.pid"
+}
+
+run_watch VPN {
+        pidfile = "/var/run/vpnc/pid"
+}
+
+path_exists VPN {
+        # path exists when a VPN tunnel launched by nmcli/nm-applet is active
+        path = "/proc/sys/net/ipv4/conf/tun0"
+        format = "%title: %status"
+}
+
+tztime local {
+        format = "%a %d %B, %H:%M"
+}
+
+load {
+        format = "%1min"
+}
+
+disk "/home" {
+        format = "/home %percentage_used used"
+}
+
+#cpu_usage {
+#        format = "CPU: %usage"
+#}
+
+#sysdata {
+#    format = "CPU: {cpu_usage} {cpu_temp}"
+#}
+
+wifi {
+device = "{{ }}"
+    format_up = "W:{signal_percent}{ssid})"
+}
+
+volume master {
+        format = "♪ %volume"
+        format_muted = "♪: muted (%volume)"
+        device = "default"
+        mixer = "Master"
+        mixer_idx = 0
+}
+
+spotify {
+    format = "{title} by {artist} -> {time}"
+    format_down = "no Spotify"
+    cache_timeout = 1
+}

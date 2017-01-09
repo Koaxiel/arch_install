@@ -50,3 +50,13 @@
     mode: 0644
   become: true
   become_user: '{{ username }}'
+
+- name: config git
+  copy:
+    src: files/gitconfig
+    dest: '{{ ansible_user_dir }}/.gitconfig'
+    owner: '{{ username }}'
+    group: users
+    mode: 0644
+  become: true
+  become_user: '{{ username }}'
