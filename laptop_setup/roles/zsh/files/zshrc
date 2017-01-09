@@ -30,13 +30,13 @@ setopt cd_able_vars
 ## glob
 #setopt glob_dots
 
-
 ## prompt
 PROMPT="%{$fg_bold[magenta]%}[%*] %(!.%{$fg_bold[red]%}.%{$fg_bold[green]%}%n@)%m %{$fg_bold[blue]%}%(!.%1~.%~) %(!.#.$)%{$reset_color%} "
 
 ## alias
 setopt completealiases
-alias grep='grep --color=auto'
+alias grep='grep --color=always'
+alias less='less -r'
 alias ls='ls --classify --tabsize=0 --literal --color=auto --show-control-chars -h'
 alias ll='ls -l'
 alias la='ls -la'
@@ -48,8 +48,21 @@ alias vim='nvim'
 eval `dircolors -b`
 export EDITOR=/usr/bin/nvim
 export GREP_COLORS='mt=1;31:sl=:cx=:fn=1;34:ln=1;35:bn=1;35:se=39'
+export LESS='-R'
+export LESS_TERMCAP_mb=$(tput bold; tput setaf 2) # green
+export LESS_TERMCAP_md=$(tput bold; tput setaf 4) # blue
+export LESS_TERMCAP_me=$(tput sgr0)
+export LESS_TERMCAP_so=$(tput bold; tput setaf 1) # red
+export LESS_TERMCAP_se=$(tput rmso; tput sgr0)
+export LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 2) # green
+export LESS_TERMCAP_ue=$(tput rmul; tput sgr0)
+export LESS_TERMCAP_mr=$(tput rev)
+export LESS_TERMCAP_mh=$(tput dim)
+export LESS_TERMCAP_ZN=$(tput ssubm)
+export LESS_TERMCAP_ZV=$(tput rsubm)
+export LESS_TERMCAP_ZO=$(tput ssupm)
+export LESS_TERMCAP_ZW=$(tput rsupm)
 
-#export GPGKEY=9C926E1A
 #export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 unset SSH_AGENT_PID
 if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
@@ -57,11 +70,6 @@ if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
 fi
 
 export WORDCHARS='*?_[]~=&;!#$%^(){}'
-
-#export GOPATH=~/go
-#export PATH="$PATH:$GOPATH/bin"
-
-#export AK_CONFDIR=~/rancid
 
 ## kebinding
 typeset -A key
@@ -118,25 +126,6 @@ zstyle ':completion:*:expand:*' tag-order all-expansions
 zstyle ':completion:*' completer _complete _list _oldlist _expand _ignored _match _correct _approximate _prefix
 zstyle ':completion:*:approximate:*' max-errors 'reply=( $(( ($#PREFIX+$#SUFFIX)/3 )) numeric )'
 
-## fonction
-h() { if [ -z "$*" ]; then history 1; else history 1 | egrep "$@"; fi; }
-
-## man
-man() {
-      env \
-      LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-      LESS_TERMCAP_md=$(printf "\e[1;31m") \
-      LESS_TERMCAP_me=$(printf "\e[0m") \
-      LESS_TERMCAP_se=$(printf "\e[0m") \
-      LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-      LESS_TERMCAP_ue=$(printf "\e[0m") \
-      LESS_TERMCAP_us=$(printf "\e[1;32m") \
-      PAGER=/usr/bin/less \
-      _NROFF_U=1 \
-      PATH=${HOME}/bin:${PATH} \
-                   man "$@"
-}
-
 ## zsh-syntax-highlighting
 if [ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]
 then
@@ -162,8 +151,8 @@ then
   ZSH_HIGHLIGHT_STYLES[single-hyphen-option]=none
   ZSH_HIGHLIGHT_STYLES[double-hyphen-option]=none
   ZSH_HIGHLIGHT_STYLES[back-quoted-argument]=none
-  ZSH_HIGHLIGHT_STYLES[single-quoted-argument]=fg=11
-  ZSH_HIGHLIGHT_STYLES[double-quoted-argument]=fg=11
+  ZSH_HIGHLIGHT_STYLES[single-quoted-argument]=fg=3
+  ZSH_HIGHLIGHT_STYLES[double-quoted-argument]=fg=3
   ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]=fg=9
   ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]=fg=9
   ZSH_HIGHLIGHT_STYLES[assign]=none

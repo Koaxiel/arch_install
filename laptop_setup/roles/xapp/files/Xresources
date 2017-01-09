@@ -22,8 +22,8 @@ URxvt.color2                : #008000
 URxvt.color10               : #0BDA51
 
 !yellow
-URxvt.color3                : #FF4500
-URxvt.color11               : #E6DB74
+URxvt.color3                : #E6DB74
+URxvt.color11               : #FF4500
 
 !blue
 URxvt.color4                : #005A9C
@@ -317,4 +317,3 @@ rofi.display-window:                 (window)
 rofi.display-windowcd:               (windowcd)
 ! The display name of this browser
 rofi.display-combi:                  (combi)
-
