@@ -64,7 +64,7 @@ URxvt.iso14755              : false
 URxvt.iso14755_52           : false
 
 !URxvt.perl-lib              : /usr/lib/urxvt/perl/
-URxvt.perl-ext-common       : default,vtwheel,matcher,selection-to-clipboard
+URxvt.perl-ext-common       : default,vtwheel,matcher
 
 URxvt.url-launcher          : /usr/bin/xdg-open
 URxvt.matcher.button        : 1
