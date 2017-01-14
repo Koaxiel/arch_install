@@ -8,6 +8,10 @@
   pacman: name=gnome-extra state=present
   become: true
 
+- name: install pulseaudio-bluetooth
+  pacman: name=pulseaudio-bluetooth state=present
+  become: true
+
 - name: enable gdm
   service: name=gdm enabled=yes
   become: true
