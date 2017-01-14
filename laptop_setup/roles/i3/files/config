@@ -183,7 +183,7 @@ workspace_auto_back_and_forth yes
 # finds out, if available)
 bar {
         position top
-        status_command i3status
+        status_command py3status
         #tray_output primary
         #tray_output eDP1
         colors {
@@ -203,8 +203,9 @@ client.focused_inactive #121212 #121212 #888888 #1e90ff
 client.unfocused        #121212 #121212 #888888 #1e90ff
 client.urgent           #ff4500 #121212 #ff4500 #1e90ff
 
+hide_edge_borders both
+new_float none
 new_window pixel 1
-#new_float <normal|1pixel|none|pixel>
 
 focus_on_window_activation urgent
 force_display_urgency_hint 500 ms
