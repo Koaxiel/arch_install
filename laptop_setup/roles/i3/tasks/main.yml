@@ -7,6 +7,8 @@
   with_items:
     - i3
     - polkit-gnome
+    - blueberry
+    - lm_sensors
   become: true
 
 - name: create .i3 folder
