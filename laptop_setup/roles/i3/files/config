@@ -46,13 +46,13 @@ bindsym XF86AudioPlay exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer
 bindsym XF86AudioPrev exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
 bindsym XF86AudioNext exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
 
-bindsym XF86AudioMute exec "pactl set-sink-mute 1 toggle; killall -USR1 i3status"
-bindsym XF86AudioLowerVolume exec "pactl set-sink-mute 1 false; pactl set-sink-volume 1 -5%; killall -USR1 i3status"
-bindsym XF86AudioRaiseVolume exec "pactl set-sink-mute 1 false; pactl set-sink-volume 1 +5%; killall -USR1 i3status"
-bindsym XF86AudioMicMute exec "pactl set-source-mute 2 toggle"
+bindsym XF86AudioMute exec "pactl set-sink-mute @DEFAULT_SINK@ toggle; killall -USR1 py3status"
+bindsym XF86AudioLowerVolume exec "pactl set-sink-mute @DEFAULT_SINK@ false; pactl set-sink-volume @DEFAULT_SINK@ -5%; killall -USR1 py3status"
+bindsym XF86AudioRaiseVolume exec "pactl set-sink-mute @DEFAULT_SINK@ false; pactl set-sink-volume @DEFAULT_SINK@ +5%; killall -USR1 py3status"
+bindsym XF86AudioMicMute exec "pactl set-source-mute @DEFAULT_SINK@ toggle"
 
-bindsym XF86MonBrightnessDown exec "xbacklight -dec 3"
-bindsym XF86MonBrightnessUp exec "xbacklight -inc 3"
+bindsym XF86MonBrightnessDown exec "xbacklight -dec 2; killall -USR1 py3status"
+bindsym XF86MonBrightnessUp exec "xbacklight -inc 2; killall -USR1 py3status"
 
 bindsym $mod+u [urgent=latest] focus
 

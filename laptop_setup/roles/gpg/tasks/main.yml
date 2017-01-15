@@ -35,5 +35,4 @@
   service:
     name: pcscd
     enabled: yes
-    state: started
   become: true
