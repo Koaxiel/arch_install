@@ -49,7 +49,7 @@ bindsym XF86AudioNext exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer
 bindsym XF86AudioMute exec "pactl set-sink-mute @DEFAULT_SINK@ toggle; killall -USR1 py3status"
 bindsym XF86AudioLowerVolume exec "pactl set-sink-mute @DEFAULT_SINK@ false; pactl set-sink-volume @DEFAULT_SINK@ -5%; killall -USR1 py3status"
 bindsym XF86AudioRaiseVolume exec "pactl set-sink-mute @DEFAULT_SINK@ false; pactl set-sink-volume @DEFAULT_SINK@ +5%; killall -USR1 py3status"
-bindsym XF86AudioMicMute exec "pactl set-source-mute @DEFAULT_SINK@ toggle"
+bindsym XF86AudioMicMute exec "pactl set-source-mute @DEFAULT_SOURCE@ toggle"
 
 bindsym XF86MonBrightnessDown exec "xbacklight -dec 2; killall -USR1 py3status"
 bindsym XF86MonBrightnessUp exec "xbacklight -inc 2; killall -USR1 py3status"
