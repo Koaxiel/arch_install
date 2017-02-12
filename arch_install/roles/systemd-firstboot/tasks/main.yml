@@ -11,7 +11,7 @@
 - name: Set hwclock
   command: hwclock --systohc --utc
 
-- name: Enable systemd-timesyncid
-  service:
+- name: Enable systemd-timesyncd.service
+  systemd:
     name: systemd-timesyncd.service
     enabled: yes
