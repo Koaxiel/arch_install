@@ -44,15 +44,6 @@
   become: true
   become_user: '{{ username }}'
 
-  #- name: Build xsettingsd-git
-  #  command: 'aursync -c --no-view {{ item }}'
-  #  args:
-  #    creates: '/var/cache/pacman/custom/{{ item }}*'
-  #  become: true
-  #  become_user: '{{ username }}'
-  #  with_items:
-  #    - xsettingsd-git
-
 - name: Build paper-icon-theme-git
   command: 'aursync -c --no-view {{ item }}'
   args:
@@ -70,6 +61,10 @@
   become_user: '{{ username }}'
   with_items:
     - adapta-gtk-theme
+
+- name: TMP remove btrfs subvolum
+  command: "btrfs subvolume delete /var/lib/aurbuild/x86_64/{{ username }}"
+  become: true
 
 - name: Build py3status
   command: 'aursync -c --no-view {{ item }}'
@@ -90,14 +85,3 @@
     - paper-icon-theme-git
     - adapta-gtk-theme
     - py3status
-#    - xsettingsd-git
-
-#- name: configure xsettingsd
-#  copy:
-#    src: files/xsettingsd
-#    dest: '{{ ansible_user_dir }}/.xsettingsd'
-#    owner: '{{ username }}'
-#    group: users
-#    mode: 0644
-#  become: true
-#  become_user: '{{ username }}'
