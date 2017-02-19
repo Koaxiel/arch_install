@@ -1,5 +1,6 @@
 ---
 # tasks file for aurutils
+
 - name: Install dependencies
   pacman:
     name: '{{ item }}'
@@ -39,42 +40,42 @@
       state: present
     become: true
 
-- name: Create custom repo configuration file
-  copy:
-    src: files/custom
-    dest: /etc/pacman.d/custom
-  become: true
+  - name: Create custom repo configuration file
+    copy:
+      src: files/custom
+      dest: /etc/pacman.d/custom
+    become: true
 
-- name: Include custom repo in pacman.conf
-  lineinfile:
-    dest: /etc/pacman.conf
-    line: 'Include = /etc/pacman.d/custom'
-  become: true
+  - name: Include custom repo in pacman.conf
+    lineinfile:
+      dest: /etc/pacman.conf
+      line: 'Include = /etc/pacman.d/custom'
+    become: true
 
-- name: Create cache directory
-  file:
-    path: /var/cache/pacman/custom
-    owner: '{{ username }}'
-    mode: 0700
-    state: directory
-  become: true
+  - name: Create cache directory
+    file:
+      path: /var/cache/pacman/custom
+      owner: '{{ username }}'
+      mode: 0700
+      state: directory
+    become: true
 
-- name: Create database of custom repo
-  command: repo-add /var/cache/pacman/custom/custom.db.tar
-  args:
-    creates: /var/cache/pacman/custom/custom.db.tar
-  become: true
-  become_user: '{{ username }}'
+  - name: Create database of custom repo
+    command: repo-add /var/cache/pacman/custom/custom.db.tar
+    args:
+      creates: /var/cache/pacman/custom/custom.db.tar
+    become: true
+    become_user: '{{ username }}'
 
-- name: Synchronize pacman
-  pacman:
-    update_cache: yes
-    upgrade: yes
-  become: true
+  - name: Synchronize pacman
+    pacman:
+      update_cache: yes
+      #upgrade: yes
+    become: true
 
-- name: Add aurutils in custom repo
-  command: aursync -c --no-view aurutils
-  args:
-    creates: '/var/cache/pacman/custom/aurutils*'
-  become: true
-  become_user: '{{ username }}'
+  - name: Add aurutils in custom repo
+    command: aursync -c --no-view aurutils
+    args:
+      creates: '/var/cache/pacman/custom/aurutils*'
+    become: true
+    become_user: '{{ username }}'
