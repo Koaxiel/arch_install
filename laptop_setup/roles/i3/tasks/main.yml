@@ -63,7 +63,9 @@
     - adapta-gtk-theme
 
 - name: TMP remove btrfs subvolum
-  command: "btrfs subvolume delete /var/lib/aurbuild/x86_64/{{ username }}"
+  command: "btrfs subvolume delete /var/lib/aurbuild/x86_64/{{ username }}/var/lib/machines"
+  args:
+    removes: "/var/lib/aurbuild/x86_64/{{ username }}/var/lib/machines"
   become: true
 
 - name: Build py3status
