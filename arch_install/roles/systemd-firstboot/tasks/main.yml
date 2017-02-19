@@ -12,6 +12,9 @@
   command: hwclock --systohc --utc
 
 - name: Enable systemd-timesyncd.service
-  systemd:
-    name: systemd-timesyncd.service
-    enabled: yes
+  #  systemd:
+  #    name: systemd-timesyncd.service
+  #    enabled: yes
+  command: systemctl enable systemd-timesyncd.service
+  args:
+    creates: /etc/systemd/system/sysinit.target.wants/systemd-timesyncd.service

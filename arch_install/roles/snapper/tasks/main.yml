@@ -50,9 +50,15 @@
     state: "mounted"
 
 - name: Enable snapper timer
-  service:
-    name: "{{ item }}"
-    enabled: yes
+  #service:
+  #  name: "{{ item }}"
+  #  enabled: yes
+  #with_items:
+  #  - "snapper-timeline.timer"
+  #  - "snapper-cleanup.timer"
+  command: systemctl enable "{{ item }}"
+  args:
+    creates: "/etc/systemd/system/timers.target.wants/{{ item }}"
   with_items:
     - "snapper-timeline.timer"
     - "snapper-cleanup.timer"

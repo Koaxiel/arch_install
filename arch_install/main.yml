@@ -54,10 +54,16 @@
 
     - block:
       - name: Enable sshd
-        service: name=sshd enabled=yes
+        #service: name=sshd enabled=yes
+        command: systemctl enable sshd.service
+        args:
+          creates: /etc/systemd/system/multi-user.target.wants/sshd.service
 
       - name: Enable dhcpcd
-        service: name=dhcpcd enabled=yes
+        #service: name=dhcpcd enabled=yes
+        command: systemctl enable dhcpcd.service
+        args:
+          creates: /etc/systemd/system/multi-user.target.wants/dhcpcd.service
       when: ansible_virtualization_role == 'guest'
   #- hosts: localhost
   #  user: root

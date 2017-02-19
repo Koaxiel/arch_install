@@ -17,5 +17,5 @@
       remote_src: true
   when: ansible_virtualization_role == 'guest'
 
-- name: Refresh pacman gpg keys
-  command: pacman-key --refresh-keys --config /mnt/etc/pacman.conf --gpgdir /mnt/etc/pacman.d/gnupg
+  #- name: Refresh pacman gpg keys
+  #command: pacman-key --refresh-keys --config /mnt/etc/pacman.conf --gpgdir /mnt/etc/pacman.d/gnupg
