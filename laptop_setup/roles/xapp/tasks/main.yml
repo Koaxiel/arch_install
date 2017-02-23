@@ -53,10 +53,13 @@
 
 - name: config git
   copy:
-    src: files/gitconfig
-    dest: '{{ ansible_user_dir }}/.gitconfig'
+    src: "files/{{ item }}"
+    dest: '{{ ansible_user_dir }}/.{{ item }}'
     owner: '{{ username }}'
     group: users
     mode: 0644
   become: true
   become_user: '{{ username }}'
+  with_items:
+    - gitconfig
+    - gitconfig.ignore
