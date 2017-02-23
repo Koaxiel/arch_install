@@ -9,6 +9,7 @@
     - polkit-gnome
     - blueberry
     - lm_sensors
+    - compton
   become: true
 
 - name: create .i3 folder
@@ -38,6 +39,16 @@
   copy:
     src: files/i3status.conf
     dest: '{{ ansible_user_dir }}/.config/i3status/config'
+    owner: '{{ username }}'
+    group: users
+    mode: 0644
+  become: true
+  become_user: '{{ username }}'
+
+- name: configure compton
+  copy:
+    src: files/compton.conf
+    dest: '{{ ansible_user_dir }}/.config/compton.conf'
     owner: '{{ username }}'
     group: users
     mode: 0644
