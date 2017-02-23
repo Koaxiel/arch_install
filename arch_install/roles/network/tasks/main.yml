@@ -1,5 +1,11 @@
 ---
+# tasks file for network
+- name: Enable systemd-networkd
+  command: systemctl enable systemd-networkd.service
+  args:
+    creates: /etc/systemd/system/multi-user.target.wants/systemd-networkd.service
 
-- name: Enable networkmanager service
-  service: name=NetworkManager enabled=yes
-
+- name: Enable systemd-resolved
+  command: systemctl enable systemd-resolved.service
+  args:
+    creates: /etc/systemd/system/multi-user.target.wants/systemd-resolved.service

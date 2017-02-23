@@ -45,7 +45,8 @@
    - { role: snapper, tags: snapper }
    - { role: fstab, tags: fstab }
    - { role: bootloader, tags: bootloader }
-  # - { role: network, tags: network }
+   - { role: network, tags: network }
+     # watchdog + installer dans la VM
 
   tasks:
     - name: Set root's password
