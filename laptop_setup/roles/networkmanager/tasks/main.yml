@@ -7,9 +7,10 @@
   with_items:
     - networkmanager
     - network-manager-applet
+  become: true
 
 - name: Start networkmanager service
   service:
     name: NetworkManager
-    state: started
     enabled: yes
+  become: true
