@@ -9,3 +9,9 @@
   command: systemctl enable systemd-resolved.service
   args:
     creates: /etc/systemd/system/multi-user.target.wants/systemd-resolved.service
+
+- name: symlink /etc/resolv.conf
+  file:
+    src: /run/systemd/resolve/resolv.conf
+    dest: /etc/resolv.conf
+    state: link
