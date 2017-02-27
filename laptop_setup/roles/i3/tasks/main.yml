@@ -22,6 +22,7 @@
   with_items:
     - '{{ ansible_user_dir }}/.config/i3'
     - '{{ ansible_user_dir }}/.config/i3status'
+    - '{{ ansible_user_dir }}/.config/environment.d'
   become: true
   become_user: '{{ username }}'
 
@@ -39,6 +40,16 @@
   copy:
     src: files/i3status.conf
     dest: '{{ ansible_user_dir }}/.config/i3status/config'
+    owner: '{{ username }}'
+    group: users
+    mode: 0644
+  become: true
+  become_user: '{{ username }}'
+
+- name: configure environment
+  copy:
+    src: files/i3.conf
+    dest: '{{ ansible_user_dir }}/.config/environment.d/i3.conf'
     owner: '{{ username }}'
     group: users
     mode: 0644
