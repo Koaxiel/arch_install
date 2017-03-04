@@ -6,11 +6,10 @@
     state: present
   with_items:
     - htop
-  #    - network-manager-applet
     - mpv
     - firefox
+    - chromium
     - libreoffice-fresh
-  #    - rxvt-unicode
     - ttf-droid
     - rofi
   become: true
@@ -20,16 +19,16 @@
   #    src: files/vtwheel
   #    dest: /usr/lib/urxvt/perl/vtwheel
   #  become: true
-  #
-  #- name: setup urxvt
-  #  copy:
-  #    src: files/Xresources
-  #    dest: '{{ ansible_user_dir }}/.Xresources'
-  #    owner: '{{ username }}'
-  #    group: users
-  #    mode: 0644
-  #  become: true
-  #  become_user: '{{ username }}'
+
+- name: setup rofi and urxvt
+  copy:
+    src: files/Xresources
+    dest: '{{ ansible_user_dir }}/.Xresources'
+    owner: '{{ username }}'
+    group: users
+    mode: 0644
+  become: true
+  become_user: '{{ username }}'
 
 - name: create .mpv folder
   file:
