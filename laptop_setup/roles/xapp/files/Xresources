@@ -10,37 +10,37 @@ URxvt.colorBD               : #1E90FF
 URxvt.colorUL               : #1E90FF
 
 !black
-URxvt.color0                : #121212
-URxvt.color8                : #1C1C1C
+color0                : #2E3436
+color8                : #465457
 
 !red
-URxvt.color1                : #960050
-URxvt.color9                : #F92672
+color1                : #960050
+color9                : #F92672
 
 !green
-URxvt.color2                : #008000
-URxvt.color10               : #0BDA51
+color2                : #008000
+color10               : #0BDA51
 
 !yellow
-URxvt.color3                : #E6DB74
-URxvt.color11               : #FF4500
+color3                : #E6DB74
+color11               : #FF4500
 
 !blue
-URxvt.color4                : #005A9C
-URxvt.color12               : #1E90FF
+color4                : #005A9C
+color12               : #1E90FF
 
 !magenta
-URxvt.color5                : #800080
-URxvt.color13               : #9966CC
+color5                : #800080
+color13               : #9966CC
 
 !cyan
-URxvt.color6                : #3579a8
+color6                : #3579A8
 !URxvt.color14               : #00CCCC
-URxvt.color14               : #1E90FF
+color14               : #1E90FF
 
 !white
-URxvt.color7                : #D0D0D0
-URxvt.color15               : #F8F8F2
+color7                : #D0D0D0
+color15               : #F8F8F2
 
 URxvt.colorBDMode           : true
 URxvt.colorULMode           : true
@@ -88,7 +88,8 @@ URxvt.imLocale              : fr_FR.UTF-8
 !-- Xft settings -- !
 Xft.autohint                : false
 Xft.lcdfilter               : lcdlight
-!Xft.dpi                     : 96
+!Xft.dpi                     : 160
+Xft.dpi                     : 211
 Xft.antialias               : true
 Xft.rgba                    : rgb
 Xft.hinting                 : true
@@ -101,7 +102,7 @@ URxvt.italicFont: xft:Droid Sans Mono:size=6:italic
 URxvt.boldItalicFont: xft:Droid Sans Mono:size=6:bold:italic
 
 Xcursor.theme: Paper
-!Xcursor.size: 32
+Xcursor.size: 32
 
 ! -- Rofi -- !
 
