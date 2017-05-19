@@ -40,6 +40,7 @@ set ignorecase         " Make searching case insensitive
 set smartcase          " ... unless the query has capital letters.
 set cursorline
 set cursorcolumn
+set guicursor=
 
 " Use <C-L> to clear the highlighting of :set hlsearch.
 if maparg('<C-L>', 'n') ==# ''

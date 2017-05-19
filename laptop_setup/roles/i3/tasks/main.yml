@@ -84,7 +84,7 @@
   with_items:
     - adapta-gtk-theme
 
-- name: TMP remove btrfs subvolum
+- name: TMP remove btrfs subvolume
   command: "btrfs subvolume delete /var/lib/aurbuild/x86_64/{{ username }}/var/lib/machines"
   args:
     removes: "/var/lib/aurbuild/x86_64/{{ username }}/var/lib/machines"
