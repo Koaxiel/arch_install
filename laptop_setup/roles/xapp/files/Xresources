@@ -96,10 +96,10 @@ Xft.hinting                 : true
 Xft.hintstyle               : hintslight
 
 ! -- Fonts -- !
-URxvt.font: xft:Droid Sans Mono:size=6
-URxvt.boldFont: xft:Droid Sans Mono:size=6:bold
-URxvt.italicFont: xft:Droid Sans Mono:size=6:italic
-URxvt.boldItalicFont: xft:Droid Sans Mono:size=6:bold:italic
+URxvt.font: xft:Noto Mono:size=6
+URxvt.boldFont: xft:Noto Mono:size=6:bold
+URxvt.italicFont: xft:Noto Mono:size=6:italic
+URxvt.boldItalicFont: xft:Noto Mono:size=6:bold:italic
 
 Xcursor.theme: Paper
 Xcursor.size: 32

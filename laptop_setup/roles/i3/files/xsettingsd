@@ -1,5 +1,5 @@
 Gtk/CursorThemeName "Paper"
-Gtk/FontName "Droid Sans 8"
+Gtk/FontName "Noto Sans 8"
 Net/FallbackIconTheme "gnome"
 Net/IconThemeName "Paper"
 Net/SoundThemeName "freedesktop"

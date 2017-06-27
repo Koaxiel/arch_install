@@ -10,7 +10,7 @@
     - firefox
     - chromium
     - libreoffice-fresh
-    - ttf-droid
+    - noto-fonts
     - rofi
   become: true
 
