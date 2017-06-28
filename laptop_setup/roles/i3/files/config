@@ -20,7 +20,7 @@ set $mod Mod4
 # right-to-left text rendering, you should instead use pango for rendering and
 # chose a FreeType font, such as:
 # font pango:DejaVu Sans Mono 10
-font pango:Droid Sans Bold 8
+font pango:Noto Sans Bold 6
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -117,32 +117,44 @@ bindsym $mod+w focus parent
 # focus the child container
 bindsym $mod+x focus child
 
+# set workspace
+set $ws1 "1: 1 "
+set $ws2 "2: 2 "
+set $ws3 "3: 3 "
+set $ws4 "4: 4 "
+set $ws5 "5: 5 "
+set $ws6 "6: 6 "
+set $ws7 "7: 7 "
+set $ws8 "8: 8 "
+set $ws9 "9: 9 "
+set $ws10 "10: 10 "
+
 # switch to workspace
-bindsym $mod+ampersand workspace 1
-bindsym $mod+eacute workspace 2
-bindsym $mod+quotedbl workspace 3
-bindsym $mod+apostrophe workspace 4
-bindsym $mod+parenleft workspace 5
-bindsym $mod+minus workspace 6
-bindsym $mod+egrave workspace 7
-bindsym $mod+underscore workspace 8
-bindsym $mod+ccedilla workspace 9
-bindsym $mod+agrave workspace 10
+bindsym $mod+ampersand workspace $ws1
+bindsym $mod+eacute workspace $ws2
+bindsym $mod+quotedbl workspace $ws3
+bindsym $mod+apostrophe workspace $ws4
+bindsym $mod+parenleft workspace $ws5
+bindsym $mod+minus workspace $ws6
+bindsym $mod+egrave workspace $ws7
+bindsym $mod+underscore workspace $ws8
+bindsym $mod+ccedilla workspace $ws9
+bindsym $mod+agrave workspace $ws10
 
 bindsym $mod+a workspace prev
 bindsym $mod+z workspace next
 
 # move focused container to workspace
-bindsym $mod+Shift+ampersand move container to workspace 1
-bindsym $mod+Shift+eacute move container to workspace 2
-bindsym $mod+Shift+quotedbl move container to workspace 3
-bindsym $mod+Shift+apostrophe move container to workspace 4
-bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+minus move container to workspace 6
-bindsym $mod+Shift+egrave move container to workspace 7
-bindsym $mod+Shift+underscore move container to workspace 8
-bindsym $mod+Shift+ccedilla move container to workspace 9
-bindsym $mod+Shift+agrave move container to workspace 10
+bindsym $mod+Shift+ampersand move container to workspace $ws1
+bindsym $mod+Shift+eacute move container to workspace $ws2
+bindsym $mod+Shift+quotedbl move container to workspace $ws3
+bindsym $mod+Shift+apostrophe move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+minus move container to workspace $ws6
+bindsym $mod+Shift+egrave move container to workspace $ws7
+bindsym $mod+Shift+underscore move container to workspace $ws8
+bindsym $mod+Shift+ccedilla move container to workspace $ws9
+bindsym $mod+Shift+agrave move container to workspace $ws10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -182,18 +194,21 @@ workspace_auto_back_and_forth yes
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+        font pango:Noto Sans Bold 6
         position top
-        status_command py3status
+        status_command i3status
         #tray_output primary
-        #tray_output eDP1
+        #tray_padding 0 px
+        strip_workspace_numbers yes
+        separator_symbol " "
         colors {
             background #000000
-            statusline #1e90ff
+            statusline #D0D0D0
 
-            focused_workspace  #1e90ff #121212
-            active_workspace   #888888 #1C1C1C
-            inactive_workspace #888888 #1C1C1C
-            urgent_workspace   #ff4500 #1C1C1C
+            focused_workspace  #000000 #000000 #1E90FF
+            active_workspace   #000000 #000000 #D0D0D0
+            inactive_workspace #000000 #000000 #D0D0D0
+            urgent_workspace   #000000 #000000 #FF4500
         }
 }
 
@@ -211,13 +226,13 @@ focus_on_window_activation urgent
 force_display_urgency_hint 500 ms
 
 #assign
-assign [class="Thunderbird"] → 1
-for_window [class="Spotify" instance="spotify"] move to workspace Spotify
-for_window [class="Slack" instance="slack"] move to workspace Slack
-assign [class="Pidgin"] → 9
+assign [class="Thunderbird"] → $ws1
+for_window [class="Spotify" instance="spotify"] move to workspace <span size='large' font_weight='light'> </span> Spotify 
+for_window [class="Slack" instance="slack"] move to workspace <span size='large' font_weight='light'> </span> Slack 
 
 #exec nautilus -n
 #exec --no-startup-id /usr/lib/mate-notification-daemon/mate-notification-daemon
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id nm-applet
 exec --no-startup-id compton -b
+exec --no-startup-id /usr/bin/feh --bg-scale ~/Downloads/canyon_16_1_by_lyssonan-d8gvns3.jpg

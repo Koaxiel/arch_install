@@ -10,6 +10,8 @@
     - blueberry
     - lm_sensors
     - compton
+    - adapta-gtk-theme
+    - awesome-terminal-fonts
   become: true
 
 - name: create .i3 folder
@@ -90,14 +92,14 @@
       #    removes: "/var/lib/aurbuild/x86_64/{{ username }}/var/lib/machines"
       #  become: true
 
-- name: Build py3status
-  command: 'aursync -c --no-view {{ item }}'
-  args:
-    creates: '/var/cache/pacman/custom/{{ item }}*'
-  become: true
-  become_user: '{{ username }}'
-  with_items:
-    - py3status
+# - name: Build py3status
+#   command: 'aursync -c --no-view {{ item }}'
+#   args:
+#     creates: '/var/cache/pacman/custom/{{ item }}*'
+#   become: true
+#   become_user: '{{ username }}'
+#   with_items:
+#     - py3status
 
 - name: Install package
   pacman:
@@ -107,5 +109,4 @@
   become: true
   with_items:
     - paper-icon-theme-git
-    - adapta-gtk-theme
-    - py3status
+    # - py3status
