@@ -7,31 +7,40 @@
     msg: "{{ disk_dev }} isn't defined (path doesn't exist)"
   when: not disk.stat.exists
 
-- block:
+- name: "Unmount {{ disk_dev }} partitions if existing"
+  command: "umount -fl {{ item.device }}"
+  with_items:
+    - "{{ ansible_mounts }}"
+  when: "disk_dev in item.device"
+  become: yes
 
-    - name: "Partitioning {{ disk_dev }}"
-      command: "{{ item }}"
-      with_items:
-          - "sgdisk {{ disk_dev }} -Zo"
-          - "parted -s {{ disk_dev }} mklabel gpt"
-          - "parted -s {{ disk_dev }} mkpart primary fat32 1MiB 513MiB"
-          - "parted -s {{ disk_dev }} mkpart primary btrfs 513MiB 100%"
-          - "parted -s {{ disk_dev }} set 1 boot on"
-      register: partition
+- name: "Zeroize {{ disk_dev }}"
+  shell: "dd if=/dev/zero of={{ disk_dev }} bs=512 status=none count=$(blockdev --getsz {{ disk_dev }})"
+  become: yes
 
-    - name: "Fail if return code is not 0"
-      fail:
-        msg: "The command ({{ item.cmd }}) did not have a 0 return code"
-      when: item.rc != 0
-      with_items: "{{partition.results}}"
+- name: "Partitioning {{ disk_dev }}"
+  command: "{{ item }}"
+  with_items:
+    - "sgdisk -Z {{ disk_dev }}"
+    - "partprobe {{ disk_dev }}"
+    - "parted -s {{ disk_dev }} mklabel gpt"
+    - "parted -s {{ disk_dev }} mkpart primary fat32 1MiB 513MiB"
+    - "parted -s {{ disk_dev }} mkpart primary btrfs 513MiB 100%"
+    - "parted -s {{ disk_dev }} set 1 boot on"
+  register: partition
+  become: yes
 
-    - name: "Formate boot partition"
-      command: "mkfs.fat -F32 -n EFI {{ disk_dev }}1"
+- name: "Fail if return code is not 0"
+  fail:
+    msg: "The command ({{ item.cmd }}) did not have a 0 return code"
+  when: item.rc != 0
+  with_items: "{{partition.results}}"
 
-    - name: "Formate system partition"
-      filesystem:
-        fstype: btrfs
-        opts: "-L System"
-        dev : "{{ disk_dev }}2"
+- name: "Formate boot partition"
+  command: "mkfs.fat -F32 -n EFI {{ disk_dev }}1"
 
-  when: disk.stat.exists
+- name: "Formate system partition"
+  filesystem:
+    fstype: btrfs
+    opts: "-L System"
+    dev : "{{ disk_dev }}2"
