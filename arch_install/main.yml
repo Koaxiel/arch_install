@@ -34,6 +34,12 @@
       fstype: "efivarfs"
       state: "mounted"
 
+  - name: Copy playbook in /root
+    copy:
+      src: "/root/koaxiel"
+      dest: "/mnt/root"
+    become: true
+
 - hosts: /mnt
   user: root
   connection: chroot
