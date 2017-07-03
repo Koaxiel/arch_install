@@ -15,7 +15,7 @@
   become: yes
 
 - name: "Zeroize {{ disk_dev }}"
-  shell: "dd if=/dev/zero of={{ disk_dev }} bs=512 status=none count=$(blockdev --getsz {{ disk_dev }})"
+  shell: "blkdiscard {{ disk_dev }})"
   become: yes
 
 - name: "Partitioning {{ disk_dev }}"
