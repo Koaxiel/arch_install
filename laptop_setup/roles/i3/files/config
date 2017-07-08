@@ -33,8 +33,8 @@ bindsym $mod+c kill
 
 # start dmenu (a program launcher)
 #bindsym $mod+d exec dmenu_run
-bindcode 49 exec --no-startup-id rofi -show combi
-bindcode $mod+49 exec --no-startup-id rofi -show ssh
+bindsym oe exec --no-startup-id rofi -show combi
+bindsym $mod+oe exec --no-startup-id rofi -show ssh
 #bindcode 49 exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -i -nb '#000000' -nf '#aaaaaa' -sf '#1e90ff' -sb '#000000' -h 18  -fn 'Droid Sans:pixelsize=11:Bold'"
 #bindsym $mod+p exec --no-startup-id passmenu -i -nb '#000000' -nf '#aaaaaa' -sf '#1e90ff' -sb '#000000' -h 18  -fn 'Droid Sans:pixelsize=11:Bold'
 bindsym $mod+Tab exec --no-startup-id rofi -show window

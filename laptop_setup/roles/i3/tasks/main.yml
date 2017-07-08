@@ -12,6 +12,8 @@
     - compton
     - adapta-gtk-theme
     - awesome-terminal-fonts
+    - mate-notification-daemon
+    - xorg-xbacklight
   become: true
 
 - name: create .i3 folder
