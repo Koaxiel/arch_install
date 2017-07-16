@@ -1,0 +1,4 @@
+---
+# handlers file for mkinitcpio
+- name: mkinitcpio
+  command: mkinitcpio -p linux

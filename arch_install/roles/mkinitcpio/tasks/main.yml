@@ -1,0 +1,10 @@
+---
+# tasks file for mkinitcpio
+- name: Update mkinitcpio.conf
+  lineinfile:
+    path: /etc/mkinitcpio.conf
+    state: present
+    regexp: '^HOOKS='
+    line: 'HOOKS="base systemd autodetect modconf block filesystems keyboard fsck sd-vconsole sd-encrypt"'
+  become: true
+  notify: mkinitcpio

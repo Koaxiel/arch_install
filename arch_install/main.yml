@@ -39,6 +39,8 @@
       src: "/root/koaxiel"
       dest: "/mnt/root"
     become: true
+    when: ansible_virtualization_role == 'host'
+
 
 - hosts: /mnt
   user: root
@@ -49,6 +51,7 @@
    - { role: systemd-firstboot, tags: systemd-firstboot }
    - { role: snapper, tags: snapper }
    - { role: fstab, tags: fstab }
+   - { role: mkinitcpio, tags: mkinitcpio }
    - { role: bootloader, tags: bootloader }
    - { role: network, tags: network }
      # watchdog + installer dans la VM
