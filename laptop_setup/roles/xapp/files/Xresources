@@ -88,8 +88,7 @@ URxvt.imLocale              : fr_FR.UTF-8
 !-- Xft settings -- !
 Xft.autohint                : false
 Xft.lcdfilter               : lcdlight
-!Xft.dpi                     : 160
-Xft.dpi                     : 211
+!Xft.dpi                     : 211
 Xft.antialias               : true
 Xft.rgba                    : rgb
 Xft.hinting                 : true
@@ -117,7 +116,7 @@ rofi.lines:                          15
 ! Number of columns
 rofi.columns:                        1
 ! Font to use
-rofi.font:                           Droid Sans Bold 18
+rofi.font:                           Noto Sans Bold 12
 ! Color scheme for normal row
 !rofi.color-normal:                   #fdf6e3,#002b36,#eee8d5,#586e75,#eee8d5
 rofi.color-normal: argb:cc1c1c1c, #d0d0d0, argb:cc1c1c1c, #1c1c1c, #ff0090

@@ -12,6 +12,8 @@
     - libreoffice-fresh
     - noto-fonts
     - rofi
+    - xorg-xrandr
+    - xorg-xdpyinfo
   become: true
 
   #- name: install urxvt-vtwheel
