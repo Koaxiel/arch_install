@@ -10,6 +10,7 @@
 
 - name: Install bootloader
   command: bootctl install
+  ignore_errors: yes
 
 - name: Install loader.conf
   copy: src=files/loader.conf dest=/boot/loader/loader.conf
