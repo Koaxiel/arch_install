@@ -8,14 +8,15 @@
   when: not disk.stat.exists
 
 - name: "Unmount {{ disk_dev }} partitions if existing"
-  command: "umount -fl {{ item.device }}"
+  command: "umount -fl {{ item.mount }}"
   with_items:
     - "{{ ansible_mounts }}"
-  when: "disk_dev in item.device"
+  when: "disk_dev in item.device or '/dev/mapper/cryptroot' in item.device"
   become: yes
+  ignore_errors: yes
 
 - name: "Zeroize {{ disk_dev }}"
-  shell: "blkdiscard {{ disk_dev }})"
+  command: "blkdiscard {{ disk_dev }}"
   become: yes
 
 - name: "Partitioning {{ disk_dev }}"
@@ -39,8 +40,20 @@
 - name: "Formate boot partition"
   command: "mkfs.fat -F32 -n EFI {{ disk_dev }}1"
 
+- name: "wipefs{{ disk_dev }}2"
+  command: "wipefs --all {{ disk_dev }}2"
+  become: true
+
+- name: "Encrypt root partition"
+  shell: printf {{ root_password }} |cryptsetup luksFormat {{ disk_dev }}2 -
+  become: yes
+
+- name: "Open encrypted partition"
+  shell: 'echo -n {{ root_password }} |cryptsetup open --type luks {{ disk_dev }}2 cryptroot --allow-discards -d -'
+  become: yes
+
 - name: "Formate system partition"
   filesystem:
     fstype: btrfs
-    opts: "-L System"
-    dev : "{{ disk_dev }}2"
+    opts: "-L System -f"
+    dev : "/dev/mapper/cryptroot"

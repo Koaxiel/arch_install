@@ -1,11 +1,11 @@
 ---
 
-- name: Search partuuid with blkid
-  command: "blkid -s PARTUUID -o value {{disk_dev}}2"
+- name: Search uuid with blkid
+  command: "blkid -s UUID -o value {{disk_dev}}2"
   register: result
 
-- name: Compute partuuid
-  set_fact: sys_partuuid={{ result.stdout }}
+- name: Compute uuid
+  set_fact: sys_uuid={{ result.stdout }}
   when: result|succeeded
 
 - name: Install bootloader

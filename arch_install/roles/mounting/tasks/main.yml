@@ -3,7 +3,7 @@
 - name: Mout btrfs partition
   mount:
     name: "/mnt/btrfs"
-    src: "{{ disk_dev }}2"
+    src: "/dev/mapper/cryptroot"
     fstype: "btrfs"
     opts: "defaults,noatime,ssd,compress=lzo"
     state: "mounted"
@@ -20,7 +20,7 @@
 - name: Mount system partition
   mount:
     name: "/mnt/"
-    src: "{{ disk_dev }}2"
+    src: "/dev/mapper/cryptroot"
     fstype: "btrfs"
     opts: "subvol=ROOT,defaults,noatime,ssd,compress=lzo"
     state: "mounted"
@@ -28,7 +28,7 @@
 - name: Mount home partition
   mount:
     name: "/mnt/home"
-    src: "{{ disk_dev }}2"
+    src: "/dev/mapper/cryptroot"
     fstype: "btrfs"
     opts: "subvol=home,defaults,noatime,ssd,compress=lzo"
     state: "mounted"
@@ -36,7 +36,7 @@
 - name: Mount snapshots partition
   mount:
     name: "/mnt/snapshots"
-    src: "{{ disk_dev }}2"
+    src: "/dev/mapper/cryptroot"
     fstype: "btrfs"
     opts: "subvol=snapshots,defaults,noatime,ssd,compress=lzo"
     state: "mounted"

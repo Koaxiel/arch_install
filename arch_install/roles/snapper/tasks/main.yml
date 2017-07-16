@@ -36,7 +36,7 @@
 - name: Mount system snapshot partition
   mount:
     name: "/.snapshots"
-    src: "{{ disk_dev }}2"
+    src: "/dev/mapper/cryptroot"
     fstype: "btrfs"
     opts: "subvol=snapshots/ROOT_snaps,defaults,noatime,ssd,compress=lzo"
     state: "mounted"
@@ -44,7 +44,7 @@
 - name: Mount home snapshot partition
   mount:
     name: "/home/.snapshots"
-    src: "{{ disk_dev }}2"
+    src: "/dev/mapper/cryptroot"
     fstype: "btrfs"
     opts: "subvol=snapshots/home_snaps,defaults,noatime,ssd,compress=lzo"
     state: "mounted"
