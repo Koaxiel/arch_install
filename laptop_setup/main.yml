@@ -20,7 +20,7 @@
     - { role: aurutils, tags: aurutils }
     - { role: zsh, tags: zsh }
     - { role: nvim, tags: nvim }
-    #- { role: gpg, tags: gpg }
+    - { role: gpg, tags: gpg }
     - { role: smart, tags: smart }
     - { role: gnome, tags: gnome }
     - { role: networkmanager, tags: networkmanager }
