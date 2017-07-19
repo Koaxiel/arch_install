@@ -5,7 +5,7 @@
 
 - block:
   - name: pacstrap on guest
-    command: "pacstrap -c /mnt base base-devel btrfs-progs ansible intel-ucode linux-lts snapper openssh"
+    command: "pacstrap -c /mnt base base-devel btrfs-progs ansible intel-ucode linux-lts snapper openssh spice-vdagent"
 
   - name: Create ssh directory
     file: path=/mnt/root/.ssh state=directory
