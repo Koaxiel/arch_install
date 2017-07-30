@@ -8,6 +8,8 @@
       msg: "'hostname' or 'root_password' variable is not defined"
     when: hostname is undefined or root_password is undefined
 
+  #- command: "pacman-key --refresh-keys"
+
   roles:
      - { role: partitioning, tags: partioning }
      - { role: mounting, tags: mounting }
