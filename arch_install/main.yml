@@ -43,6 +43,12 @@
     become: true
     when: ansible_virtualization_role == 'host'
 
+  - name: Copy wpa_supplicant-wired.conf in /root
+    copy:
+      src: "/root/wpa_supplicant-wired.conf"
+      dest: "/mnt/root"
+    become: true
+    when: ansible_virtualization_role == 'host'
 
 - hosts: /mnt
   user: root
