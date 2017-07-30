@@ -21,6 +21,7 @@
     state: present
     regexp: '#KillUserProcesses'
     line: 'KillUserProcesses=yes'
+    backrefs: yes
   become: true
 
 - name: /etc/systemd/system.conf
@@ -29,4 +30,5 @@
     state: present
     regexp: '#RuntimeWatchdogSec='
     line: 'RuntimeWatchdogSec=20'
+    backrefs: yes
   become: true
