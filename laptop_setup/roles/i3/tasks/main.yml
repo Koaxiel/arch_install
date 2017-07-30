@@ -79,30 +79,6 @@
   with_items:
     - paper-icon-theme-git
 
-      #- name: Build adapta-gtk-theme
-      #  command: 'aursync -c --no-view {{ item }}'
-      #  args:
-      #    creates: '/var/cache/pacman/custom/{{ item }}*'
-      #  become: true
-      #  become_user: '{{ username }}'
-      #  with_items:
-      #    - adapta-gtk-theme
-
-      #- name: TMP remove btrfs subvolume
-      #  command: "btrfs subvolume delete /var/lib/aurbuild/x86_64/{{ username }}/var/lib/machines"
-      #  args:
-      #    removes: "/var/lib/aurbuild/x86_64/{{ username }}/var/lib/machines"
-      #  become: true
-
-# - name: Build py3status
-#   command: 'aursync -c --no-view {{ item }}'
-#   args:
-#     creates: '/var/cache/pacman/custom/{{ item }}*'
-#   become: true
-#   become_user: '{{ username }}'
-#   with_items:
-#     - py3status
-
 - name: Install package
   pacman:
     name: '{{ item }}'
@@ -111,4 +87,3 @@
   become: true
   with_items:
     - paper-icon-theme-git
-    # - py3status
