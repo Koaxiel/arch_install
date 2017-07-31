@@ -29,6 +29,12 @@
     dest: "/etc/X11/xorg.conf.d/10-monitor.conf"
   become: true
 
+- name: 10-mouse.conf
+  copy:
+    src: files/10-mouse.conf
+    dest: "/etc/X11/xorg.conf.d/10-mouse.conf"
+  become: true
+
 - name: 30-touchpad.conf
   copy:
     src: files/30-touchpad.conf
