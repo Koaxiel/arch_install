@@ -1,6 +1,6 @@
 ---
 - name: pacstrap on host
-  command: "pacstrap /mnt base base-devel btrfs-progs ansible intel-ucode linux-lts snapper"
+  command: "pacstrap /mnt base base-devel btrfs-progs ansible intel-ucode linux-lts snapper wpa_supplicant"
   when: ansible_virtualization_role == 'host'
 
 - block:
