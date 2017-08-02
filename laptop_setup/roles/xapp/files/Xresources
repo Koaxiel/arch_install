@@ -101,7 +101,7 @@ URxvt.italicFont: xft:Noto Mono:size=6:italic
 URxvt.boldItalicFont: xft:Noto Mono:size=6:bold:italic
 
 Xcursor.theme: Paper
-Xcursor.size: 32
+Xcursor.size: 16
 
 ! -- Rofi -- !
 
