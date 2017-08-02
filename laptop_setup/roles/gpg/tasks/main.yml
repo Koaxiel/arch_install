@@ -17,7 +17,7 @@
     owner: '{{ username }}'
     group: users
     state: directory
-    mode: 0755
+    mode: 0700
   become: true
   become_user: '{{ username }}'
 
@@ -32,7 +32,8 @@
   become_user: '{{ username }}'
 
 - name: enable pcscd
-  service:
+  systemd:
     name: pcscd
     enabled: yes
+    state: started
   become: true
