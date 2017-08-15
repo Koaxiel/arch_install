@@ -16,5 +16,5 @@
     dump: '0'
     passno: "{{ '2' if item.mount == '/boot' else '0' }}"
     state: "present"
-  when: "{{ 'disk_dev|string()' }} in {{ 'item.device|string()' }}"
+  when: item.device == '/dev/mapper/cryptroot' or item.device | search(disk_dev)
   with_items: "{{ ansible_mounts }}"
