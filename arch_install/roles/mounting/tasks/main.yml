@@ -1,6 +1,6 @@
 ---
 
-- name: Mout btrfs partition
+- name: Mount btrfs partition
   mount:
     name: "/mnt/btrfs"
     src: "/dev/mapper/cryptroot"
@@ -16,6 +16,11 @@
 
 - name: Create snapshot subvolume
   command: "btrfs subvolume create /mnt/btrfs/snapshots"
+
+- name: Unmount btrfs partition
+  mount:
+    path: "/mnt/btrfs"
+    state: "unmounted"
 
 - name: Mount system partition
   mount:
