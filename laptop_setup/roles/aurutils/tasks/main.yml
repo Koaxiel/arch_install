@@ -19,6 +19,11 @@
 
   rescue:
     - block:
+      - name: Add gpg key
+        command: gpg --recv-keys DBE7D3DD8C81D58D0A13D0E76BC26A17B9B7018A
+        become: true
+        become_user: '{{ username }}'
+
       - name: Download source
         git:
           repo: https://aur.archlinux.org/aurutils.git
