@@ -227,12 +227,11 @@ force_display_urgency_hint 500 ms
 
 #assign
 assign [class="Thunderbird"] → $ws1
-for_window [class="Spotify" instance="spotify"] move to workspace <span size='large' font_weight='light'> </span> Spotify 
-for_window [class="Slack" instance="slack"] move to workspace <span size='large' font_weight='light'> </span> Slack 
+for_window [class="Spotify" instance="spotify"] move to workspace <span size='large' font_weight='light'> </span> Spotify <>
+for_window [class="Slack" instance="slack"] move to workspace <span size='large' font_weight='light'> </span> Slack <>
 
 #exec nautilus -n
 #exec --no-startup-id /usr/lib/mate-notification-daemon/mate-notification-daemon
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id nm-applet
-exec --no-startup-id compton -b
 exec --no-startup-id /usr/bin/feh --bg-scale ~/Downloads/canyon_16_1_by_lyssonan-d8gvns3.jpg
