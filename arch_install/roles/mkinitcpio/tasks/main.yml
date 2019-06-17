@@ -1,10 +1,19 @@
 ---
 # tasks file for mkinitcpio
-- name: Update mkinitcpio.conf
+- name: Update HOOKS mkinitcpio.conf
   lineinfile:
     path: /etc/mkinitcpio.conf
     state: present
     regexp: '^HOOKS='
-    line: 'HOOKS="base systemd autodetect modconf block filesystems keyboard fsck sd-vconsole sd-encrypt"'
+    line: 'HOOKS="base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt sd-lvm2 filesystems fsck"'
+  become: true
+  notify: mkinitcpio
+
+- name: Update MODULES mkinitcpio.conf
+  lineinfile:
+    path: /etc/mkinitcpio.conf
+    state: present
+    regexp: '^MODULES='
+    line: 'MODULES="i915"'
   become: true
   notify: mkinitcpio

@@ -3,12 +3,8 @@
 
 - name: install package for Yubikey
   pacman:
-    name: "{{ item }}"
+    name: [pcsc-tools, ccid, libusb-compat]
     state: present
-  with_items:
-    - pcsc-tools
-    - ccid
-    - libusb-compat
   become: true
 
 - name: create .gnupg folder

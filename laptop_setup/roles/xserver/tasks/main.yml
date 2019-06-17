@@ -2,41 +2,30 @@
 
 - name: install xorg driver
   pacman:
-    name: "{{ item }}"
+    name: [vulkan-intel, intel-media-driver, xf86-input-libinput]
     state: present
-  with_items:
-    - xf86-video-intel
-    - libva-intel-driver
-    - xf86-input-libinput
   become: true
 
+- name: Create i915.conf
+  lineinfile:
+    path: /etc/modprobe.d/i915.conf
+    line: 'options i915 enable_guc=2 enable_fbc=1 fastboot=1'
+    create: yes
+  become: true 
 
 - name: ensure xorg.conf.d directory exists
   file:
-    path: "/etc/X11/xorg.conf.d"
+    path: /etc/X11/xorg.conf.d
     state: directory
   become: true
 
-- name: 00-keyboard.conf
+- name: Create {{ item }}
   copy:
-    src: files/00-keyboard.conf
-    dest: "/etc/X11/xorg.conf.d/00-keyboard.conf"
+    src: "files/{{ item }}"
+    dest: "/etc/X11/xorg.conf.d/{{ item }}"
   become: true
-
-- name: 10-monitor.conf
-  copy:
-    src: files/10-monitor.conf
-    dest: "/etc/X11/xorg.conf.d/10-monitor.conf"
-  become: true
-
-- name: 10-mouse.conf
-  copy:
-    src: files/10-mouse.conf
-    dest: "/etc/X11/xorg.conf.d/10-mouse.conf"
-  become: true
-
-- name: 30-touchpad.conf
-  copy:
-    src: files/30-touchpad.conf
-    dest: "/etc/X11/xorg.conf.d/30-touchpad.conf"
-  become: true
+  loop:
+    - 00-keyboard.conf
+    - 10-monitor.conf
+    - 10-mouse.conf
+    - 30-touchpad.conf

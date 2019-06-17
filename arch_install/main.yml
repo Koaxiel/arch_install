@@ -2,62 +2,55 @@
 - hosts: localhost
   user: root
   connection: local
+  vars:
+    disk_dev: /dev/sda
 
   pre_tasks:
   - fail:
-      msg: "'hostname' or 'root_password' variable is not defined"
+      msg: "'hostname' or 'root_password' isn't defined"
     when: hostname is undefined or root_password is undefined
 
-  #- command: "pacman-key --refresh-keys"
-
   roles:
-     - { role: partitioning, tags: partioning }
-     - { role: mounting, tags: mounting }
-     - { role: pacstrap, tags: pacstrap }
+    - {role: partitioning, tags: partitioning}
+    - {role: mounting, tags: mounting}
+    - {role: pacstrap, tags: pacstrap}
 
   post_tasks:
+  - name: Copy playbook and 802.1x conf in /root
+    copy:
+      src: "{{ item }}"
+      dest: '/mnt/root'
+    loop: ['/root/koaxiel', '/root/wpa_supplicant-wired.conf']
+    when: ansible_virtualization_role == 'host'
+
   - name: Mount pseudo file systems
     mount:
-      src: "/{{ item }}"
-      name: "/mnt/{{ item }}"
-      fstype: "{{ 'proc' if item == 'proc' else 'bind' }}"
-      state: "mounted"
-      opts: "rbind"
-    with_items:
-      - proc
-      - sys
-      - dev
-      - run
+      src: "{{ item.src }}"
+      name: "/mnt{{ item.mount }}"
+      fstype: "{{ item.type }}"
+      state: mounted
+      opts: "{{ item.opts }}"
+    loop:
+      - { src: 'proc', mount: '/proc', type: 'proc', opts: 'nosuid,noexec,nodev'}
+      - { src: 'sys', mount: '/sys', type: 'sysfs', opts: 'nosuid,noexec,nodev,ro'}
+      - { src: 'efivars', mount: '/sys/firmware/efi/efivars', type: 'efivarfs', opts: 'nosuid,noexec,nodev'}
+      - { src: 'udev', mount: '/dev', type: 'devtmpfs', opts: 'mode=0755,nosuid'}
+      - { src: 'devpts', mount: '/dev/pts', type: 'devpts', opts: 'mode=0620,gid=5,nosuid,noexec'}
+      - { src: 'shm', mount: '/dev/shm', type: 'tmpfs', opts: 'mode=1777,nosuid,nodev'}
+      - { src: '/run', mount: '/run', type: none, opts: 'bind'}
+      - { src: 'tmp', mount: '/tmp', type: 'tmpfs', opts: 'mode=1777,strictatime,nodev,nosuid'}
 
-  - name: Mount efivars
-    mount:
-      name: "/sys/firmware/efi/efivars"
-      src: "efivarfs"
-      fstype: "efivarfs"
-      state: "mounted"
-
-  - name: Copy playbook in /root
-    copy:
-      src: "/root/koaxiel"
-      dest: "/mnt/root"
-    become: true
-    when: ansible_virtualization_role == 'host'
-
-  - name: Copy wpa_supplicant-wired.conf in /root
-    copy:
-      src: "/root/wpa_supplicant-wired.conf"
-      dest: "/mnt/root"
-    become: true
-    when: ansible_virtualization_role == 'host'
-
+# Chroot
 - hosts: /mnt
   user: root
   connection: chroot
+  vars:
+    ansible_chroot_exe: arch-chroot
+    disk_dev: /dev/sda
+    sys_uuid: "{{ ansible_facts['devices']['sda']['partitions']['sda2']['uuid'] }}"
 
   roles:
-   - { role: locale, tags: locale }
-   - { role: systemd-firstboot, tags: systemd-firstboot }
-   - { role: snapper, tags: snapper }
+   - { role: basics, tags: basics }
    - { role: fstab, tags: fstab }
    - { role: mkinitcpio, tags: mkinitcpio }
    - { role: bootloader, tags: bootloader }
@@ -65,40 +58,47 @@
      # watchdog + installer dans la VM
 
   tasks:
-  - name: Set root's password
-    user: name=root password={{ root_password |password_hash('sha512') }}
-    tags: root
+  - name: Set root password
+    user: name=root password={{ root_password | password_hash('sha512') }}
+    tags: root_password
 
-  - block:
-    - name: Enable sshd
-      #service: name=sshd enabled=yes
-      command: systemctl enable sshd.service
-      args:
-        creates: /etc/systemd/system/multi-user.target.wants/sshd.service
-
-    - name: Enable dhcpcd
-      #service: name=dhcpcd enabled=yes
-      command: systemctl enable dhcpcd.service
-      args:
-        creates: /etc/systemd/system/multi-user.target.wants/dhcpcd.service
-
+  - name: Enable sshd and dhcpcd
+    service:
+      name: "{{ item }}"
+      enabled: yes
+    loop: [sshd, dhcpcd]
     when: ansible_virtualization_role == 'guest'
-  #- hosts: localhost
-  #  user: root
-  #  connection: local
-  #
-  #  tasks:
-  #  post_tasks:
-  #    - name: umount pseudo file systems
-  #      mount:
-  #        src: "/{{ item }}"
-  #        name: "/mnt/{{ item }}"
-  #        fstype: "{{ 'proc' if item == 'proc' else 'bind' }}"
-  #        state: "unmounted"
-  #        opts: "rbind"
-  #      with_items:
-  #        - proc
-  #        - sys
-  #        - dev
-  #        - run
-  #      tags: unchroot
+  
+  # - fail:
+
+# Cleaning
+- hosts: localhost
+  user: root
+  connection: local
+  vars:
+    disk_dev: /dev/sda
+
+  tasks:
+  - name: Unmount pseudo file systems
+    mount:
+      src: "{{ item.src }}"
+      name: "/mnt{{ item.mount }}"
+      fstype: "{{ item.type }}"
+      state: unmounted
+      opts: "{{ item.opts }}"
+    loop:
+      - { src: 'proc', mount: '/proc', type: 'proc', opts: 'nosuid,noexec,nodev'}
+      - { src: 'efivars', mount: '/sys/firmware/efi/efivars', type: 'efivarfs', opts: 'nosuid,noexec,nodev'}
+      - { src: 'sys', mount: '/sys', type: 'sysfs', opts: 'nosuid,noexec,nodev,ro'}
+      - { src: 'devpts', mount: '/dev/pts', type: 'devpts', opts: 'mode=0620,gid=5,nosuid,noexec'}
+      - { src: 'shm', mount: '/dev/shm', type: 'tmpfs', opts: 'mode=1777,nosuid,nodev'}
+      - { src: 'udev', mount: '/dev', type: 'devtmpfs', opts: 'mode=0755,nosuid'}
+      - { src: '/run', mount: '/run', type: none, opts: 'bind'}
+      - { src: 'tmp', mount: '/tmp', type: 'tmpfs', opts: 'mode=1777,strictatime,nodev,nosuid'}
+
+  - name: "Unmount {{ disk_dev }} partitions if existing"
+    mount:
+      path: "{{ item.mount }}"
+      state: unmounted
+    loop: "{{ ansible_mounts | sort(attribute='mount', reverse=True) }}"
+    when: disk_dev in item.device or '/dev/mapper' in item.device

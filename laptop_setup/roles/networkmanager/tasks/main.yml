@@ -2,11 +2,8 @@
 # tasks file for networkmanager
 - name: Install networkmanager
   pacman:
-    name: "{{ item }}"
+    name: [networkmanager, network-manager-applet, iwd]
     state: present
-  with_items:
-    - networkmanager
-    - network-manager-applet
   become: true
 
 - name: Start networkmanager service

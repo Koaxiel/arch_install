@@ -1,0 +1,11 @@
+# vars file for i3
+packages: [
+  i3,
+  polkit-gnome,
+  blueberry,
+  lm_sensors,
+  adapta-gtk-theme,
+  awesome-terminal-fonts,
+  mate-notification-daemon,
+  xorg-xbacklight,
+]

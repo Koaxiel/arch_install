@@ -1,20 +1,9 @@
 ---
 
-- name: install xapp
+- name: Install xapp
   pacman:
-    name: '{{ item }}'
+    name: '{{ packages }}'
     state: present
-  with_items:
-    - htop
-    - mpv
-    - firefox
-    - chromium
-    - libreoffice-fresh
-    - noto-fonts
-    - rofi
-    - xorg-xrandr
-    - xorg-xdpyinfo
-    - git-review
   become: true
 
   #- name: install urxvt-vtwheel
@@ -23,7 +12,7 @@
   #    dest: /usr/lib/urxvt/perl/vtwheel
   #  become: true
 
-- name: setup rofi and urxvt
+- name: setup rofi
   copy:
     src: files/Xresources
     dest: '{{ ansible_user_dir }}/.Xresources'
@@ -62,6 +51,4 @@
     mode: 0644
   become: true
   become_user: '{{ username }}'
-  with_items:
-    - gitconfig
-    - gitconfig.ignore
+  loop: [gitconfig, gitconfig.ignore]

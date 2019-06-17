@@ -1,15 +1,10 @@
 ---
 # tasks file for gnome
-- name: install gnome
-  pacman: name=gnome state=present
-  become: true
 
-- name: install gnome-extra
-  pacman: name=gnome-extra state=present
-  become: true
-
-- name: install pulseaudio-bluetooth
-  pacman: name=pulseaudio-bluetooth state=present
+- name: Install gnome
+  pacman:
+    name: ['gnome', 'gnome-extra', 'pulseaudio-bluetooth', 'otf-fira-mono']
+    state: present
   become: true
 
 - name: enable gdm
@@ -34,7 +29,7 @@
   notify: dconf load
   become: true
   become_user: '{{ username }}'
-  with_items:
+  loop:
     - interface.conf
     - keyboard.conf
     - nautilus.conf
@@ -61,9 +56,7 @@
     mode: 0644
   become: true
   become_user: '{{ username }}'
-  with_items:
-    - bookmarks
-    - settings.ini
+  loop: [bookmarks, settings.ini]
 
 - name: setup gtk-2.0
   copy:

@@ -1,11 +1,6 @@
 ---
-
-- name: Gather fact
-  setup:
-  register: result
-
-- debug:
-    var: result
+# - setup: gather_subset=hardware
+# - debug: var=ansible_mounts
 
 - name: Create fstab file from ansible_mounts
   mount:
@@ -15,6 +10,6 @@
     opts: "{{ item.options|replace(',bind', '') }}"
     dump: '0'
     passno: "{{ '2' if item.mount == '/boot' else '0' }}"
-    state: "present"
-  when: item.device == '/dev/mapper/cryptroot' or item.device | search(disk_dev)
-  with_items: "{{ ansible_mounts }}"
+    state: present
+  when: disk_dev in item.device or '/dev/mapper' in item.device
+  loop: "{{ ansible_mounts }}"

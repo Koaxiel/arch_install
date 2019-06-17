@@ -2,18 +2,8 @@
 
 - name: install i3
   pacman:
-    name: '{{ item }}'
+    name: '{{ packages }}'
     state: present
-  with_items:
-    - i3
-    - polkit-gnome
-    - blueberry
-    - lm_sensors
-    - compton
-    - adapta-gtk-theme
-    - awesome-terminal-fonts
-    - mate-notification-daemon
-    - xorg-xbacklight
   become: true
 
 - name: create .i3 folder
@@ -23,7 +13,7 @@
     group: users
     state: directory
     mode: 0755
-  with_items:
+  loop:
     - '{{ ansible_user_dir }}/.config/i3'
     - '{{ ansible_user_dir }}/.config/i3status'
     - '{{ ansible_user_dir }}/.config/environment.d'
@@ -60,30 +50,18 @@
   become: true
   become_user: '{{ username }}'
 
-- name: configure compton
-  copy:
-    src: files/compton.conf
-    dest: '{{ ansible_user_dir }}/.config/compton.conf'
-    owner: '{{ username }}'
-    group: users
-    mode: 0644
-  become: true
-  become_user: '{{ username }}'
-
-- name: Build paper-icon-theme-git
-  command: 'aursync -c --no-view {{ item }}'
+- name: Build paper-icon-theme
+  command: 'aur sync -c --no-view {{ item }}'
   args:
     creates: '/var/cache/pacman/custom/{{ item }}*'
   become: true
   become_user: '{{ username }}'
   with_items:
-    - paper-icon-theme-git
+    - paper-icon-theme
 
 - name: Install package
   pacman:
-    name: '{{ item }}'
+    name: 'paper-icon-theme'
     state: present
     update_cache: yes
   become: true
-  with_items:
-    - paper-icon-theme-git

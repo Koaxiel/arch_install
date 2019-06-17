@@ -1,6 +1,5 @@
 ---
 - hosts: localhost
-
   vars:
     username: '{{ ansible_user_id }}'
 

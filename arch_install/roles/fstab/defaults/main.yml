@@ -1,2 +1,2 @@
 ---
-disk_dev: /dev/sda
+# defaults file for fstab

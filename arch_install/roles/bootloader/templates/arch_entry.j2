@@ -1,5 +1,12 @@
+{% if 'lts' in item %}
+title          Arch Linux LTS
+linux          /vmlinuz-linux-lts
+initrd         /intel-ucode.img
+initrd         /initramfs-linux-lts.img
+{% else %}
 title          Arch Linux
 linux          /vmlinuz-linux
 initrd         /intel-ucode.img
 initrd         /initramfs-linux.img
-options        rd.luks.uuid={{ sys_uuid }} rd.luks.name={{ sys_uuid }}=cryptroot root=/dev/mapper/cryptroot rw rootflags=subvol=ROOT rd.luks.options=discard
+{% endif %}
+options        rd.luks.name={{ sys_uuid }}=cryptlvm root=/dev/vg.main/root resume=/dev/vg.main/swap rw rd.luks.options=discard

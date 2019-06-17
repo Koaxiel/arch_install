@@ -12,9 +12,7 @@
     owner: "{{ username }}"
     group: users
     state: directory
-  with_items:
-    - 'colors'
-    - 'autoload'
+  loop: [colors, autoload]
   become: true
   become_user: '{{ username }}'
 

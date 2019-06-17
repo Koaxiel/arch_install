@@ -3,11 +3,8 @@
 
 - name: Install dependencies
   pacman:
-    name: '{{ item }}'
+    name: ['devtools', 'git']
     state: present
-  with_items:
-    - devtools
-    - git
   become: true
 
 - block:
@@ -79,7 +76,7 @@
     become: true
 
   - name: Add aurutils in custom repo
-    command: aursync -c --no-view aurutils
+    command: aur sync -c --no-view aurutils
     args:
       creates: '/var/cache/pacman/custom/aurutils*'
     become: true

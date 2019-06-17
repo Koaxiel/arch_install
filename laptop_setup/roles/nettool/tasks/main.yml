@@ -1,18 +1,7 @@
 ---
 
-- name: install network tools
+- name: Install Network tools
   pacman:
-    name: '{{ item }}'
+    name: '{{ packages }}'
     state: present
-  with_items:
-    - sipcalc
-    - mtr
-    - ethtool
-    - nmap
-    - hping
-    - picocom
-    - openbsd-netcat
-    - openssh
-    - iperf3
-    - iw
   become: true

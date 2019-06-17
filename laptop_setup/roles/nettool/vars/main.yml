@@ -1,0 +1,13 @@
+# vars file for nettool
+packages: [
+  sipcalc,
+  mtr,
+  ethtool,
+  nmap,
+  hping,
+  picocom,
+  openbsd-netcat,
+  openssh,
+  iperf3,
+  iw,
+]

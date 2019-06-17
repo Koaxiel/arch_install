@@ -1,5 +1,0 @@
-title          Arch Linux LTS
-linux          /vmlinuz-linux-lts
-initrd         /intel-ucode.img
-initrd         /initramfs-linux-lts.img
-options        rd.luks.uuid={{ sys_uuid }} rd.luks.name={{ sys_uuid }}=cryptroot root=/dev/mapper/cryptroot rw rootflags=subvol=ROOT rd.luks.options=discard

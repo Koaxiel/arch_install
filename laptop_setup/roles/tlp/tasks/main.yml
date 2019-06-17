@@ -2,12 +2,9 @@
 # tasks file for tlp
 - name: install tlp
   pacman:
-    name: '{{item}}'
+    name: [tlp, acpi_call]
     state: present
   become: true
-  with_items:
-    - tlp
-    - acpi_call
 
 - name: start tlp
   service:

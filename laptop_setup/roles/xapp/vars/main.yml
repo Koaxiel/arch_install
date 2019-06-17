@@ -1,0 +1,15 @@
+---
+# vars file for xapp
+packages: [
+  htop,
+  mpv,
+  firefox,
+  chromium,
+  libreoffice-fresh,
+  noto-fonts,
+  ttf-droid,
+  rofi,
+  arandr,
+  xorg-xdpyinfo,
+  git-review,
+]

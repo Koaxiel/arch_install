@@ -7,53 +7,111 @@
     msg: "{{ disk_dev }} isn't defined (path doesn't exist)"
   when: not disk.stat.exists
 
+# - setup: gather_subset=hardware
+- debug: var=ansible_mounts
+
 - name: "Unmount {{ disk_dev }} partitions if existing"
-  command: "umount -fl {{ item.mount }}"
-  with_items:
-    - "{{ ansible_mounts }}"
-  when: "disk_dev in item.device or '/dev/mapper/cryptroot' in item.device"
-  become: yes
-  ignore_errors: yes
+  mount:
+    path: "{{ item.mount }}"
+    state: unmounted
+  loop: "{{ ansible_mounts }}"
+  when: disk_dev in item.device or '/dev/mapper' in item.device
+  # ignore_errors: yes
+
+# - name: "Delete partionning"
+#   command: "sgdisk -Z {{ disk_dev }}"
+
+# - name: "Flush partition"
+#   command: "partprobe {{ disk_dev }}"
+
+- name: "Read device information (always use unit when probing)"
+  parted:
+    device: "{{ disk_dev }}"
+    unit: MiB
+  register: disk_dev_info
+
+- name: "Remove all partitions from disk"
+  parted:
+    device: "{{ disk_dev }}"
+    number: "{{ item.num }}"
+    state: absent
+  loop: "{{ disk_dev_info.partitions }}"
+
+# - name: "Delete partionning"
+#   command: "sgdisk -Z {{ disk_dev }}"  
+
+# - name: "Flush partition"
+#   command: "partprobe {{ disk_dev }}"  
 
 - name: "Zeroize {{ disk_dev }}"
   command: "blkdiscard {{ disk_dev }}"
-  become: yes
 
-- name: "Partitioning {{ disk_dev }}"
-  command: "{{ item }}"
-  with_items:
-    - "sgdisk -Z {{ disk_dev }}"
-    - "partprobe {{ disk_dev }}"
-    - "parted -s {{ disk_dev }} mklabel gpt"
-    - "parted -s {{ disk_dev }} mkpart primary fat32 1MiB 513MiB"
-    - "parted -s {{ disk_dev }} mkpart primary btrfs 513MiB 100%"
-    - "parted -s {{ disk_dev }} set 1 boot on"
-  register: partition
-  become: yes
+- name: Create UEFI partition
+  parted:
+    device: "{{ disk_dev }}"
+    name: EFI System Partition
+    number: 1
+    label: gpt
+    flags: [ esp, boot ]
+    state: present
+    part_end: 513MiB
 
-- name: "Fail if return code is not 0"
-  fail:
-    msg: "The command ({{ item.cmd }}) did not have a 0 return code"
-  when: item.rc != 0
-  with_items: "{{partition.results}}"
-
-- name: "Formate boot partition"
-  command: "mkfs.fat -F32 -n EFI {{ disk_dev }}1"
-
-- name: "wipefs{{ disk_dev }}2"
-  command: "wipefs --all {{ disk_dev }}2"
-  become: true
-
-- name: "Encrypt root partition"
-  shell: printf {{ root_password }} |cryptsetup luksFormat {{ disk_dev }}2 -
-  become: yes
-
-- name: "Open encrypted partition"
-  shell: 'echo -n {{ root_password }} |cryptsetup open --type luks {{ disk_dev }}2 cryptroot --allow-discards -d -'
-  become: yes
-
-- name: "Formate system partition"
+- name: Create a FAT32 filesystem on {{ disk_dev }}1
   filesystem:
-    fstype: btrfs
-    opts: "-L System -f"
-    dev : "/dev/mapper/cryptroot"
+    fstype: vfat
+    dev: "{{ disk_dev }}1"
+    opts: -F32 -n EFI
+
+- name: Create LVM partition
+  parted:
+    device: "{{ disk_dev }}"
+    name: LVM_Partition
+    number: 2
+    label: gpt
+    flags: [ lvm ]
+    state: present
+    part_start: 513MiB
+
+# - name: "wipefs{{ disk_dev }}2"
+#   command: "wipefs --all {{ disk_dev }}2"
+
+- name: Encrypt LVM partition
+  shell: printf {{ root_password }} |cryptsetup luksFormat --type luks2 {{ disk_dev }}2 -
+
+- name: Open encrypted partition
+  shell: 'echo -n {{ root_password }} |cryptsetup open {{ disk_dev }}2 cryptlvm -'
+
+- name: Formate LVM partition
+  filesystem:
+    fstype: lvm
+    dev : /dev/mapper/cryptlvm
+
+- name: Create a volume group on top of {{ disk_dev }}2  with physical extent size = 32MB
+  lvg:
+    vg: vg.main
+    pvs: /dev/mapper/cryptlvm
+    pesize: '32'
+
+- name: Create a swap logical volume
+  lvol:
+    vg: vg.main
+    lv: swap
+    size: "{{ 2 * ansible_memtotal_mb }}"
+
+- name: Create a root logical volume
+  lvol:
+    vg: vg.main
+    lv: root
+    size: 100%FREE
+
+# - name: Formate swap volume
+#   filesystem:
+#     fstype: swap
+#     dev : /dev/vg.main/swap
+- name: Formate swap volume
+  command: mkswap /dev/vg.main/swap
+
+- name: Formate root volume
+  filesystem:
+    fstype: ext4
+    dev : /dev/vg.main/root

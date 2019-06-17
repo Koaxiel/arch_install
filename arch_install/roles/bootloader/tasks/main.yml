@@ -1,29 +1,14 @@
 ---
-
-- name: Search uuid with blkid
-  command: "blkid -s UUID -o value {{disk_dev}}2"
-  register: result
-
-- name: Compute uuid
-  set_fact: sys_uuid={{ result.stdout }}
-  when: result|succeeded
-
 - name: Install bootloader
   command: bootctl install
-  ignore_errors: yes
+  args:
+    creates: /boot/EFI/systemd/systemd-bootx64.efi
 
 - name: Install loader.conf
   copy: src=files/loader.conf dest=/boot/loader/loader.conf
 
 - name: Install arch entry
-  template: src=templates/arch_entry.j2 dest=/boot/loader/entries/arch.conf
-
-- name: Install arch_lts entry
-  template: src=templates/arch_lts_entry.j2 dest=/boot/loader/entries/arch-lts.conf
-
-  #- name: Remove efivars
-  #  mount:
-  #    name: "/sys/firmware/efi/efivars"
-  #    src: "efivarfs"
-  #    fstype: "efivarfs"
-  #    state: "unmounted"
+  template: 
+    src: templates/arch_entry.j2 
+    dest: /boot/loader/entries/{{ item }}
+  loop: [arch.conf, arch-lts.conf]

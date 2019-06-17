@@ -1,54 +1,25 @@
 ---
+# - name: Mount swap partition
+#   mount:
+#     path: swap
+#     src: /dev/vg.main/swap
+#     fstype: swap
+#     opts: sw
+#     state: mounted
 
-- name: Mount btrfs partition
+- name: Active swap volume
+  command: swapon /dev/vg.main/swap
+
+- name: Mount root volume
   mount:
-    name: "/mnt/btrfs"
-    src: "/dev/mapper/cryptroot"
-    fstype: "btrfs"
-    opts: "defaults,noatime,ssd,compress=lzo"
-    state: "mounted"
-
-- name: Create root subvolume
-  command: "btrfs subvolume create /mnt/btrfs/ROOT"
-
-- name: Create home subvolume
-  command: "btrfs subvolume create /mnt/btrfs/home"
-
-- name: Create snapshot subvolume
-  command: "btrfs subvolume create /mnt/btrfs/snapshots"
-
-- name: Unmount btrfs partition
-  mount:
-    path: "/mnt/btrfs"
-    state: "unmounted"
-
-- name: Mount system partition
-  mount:
-    name: "/mnt/"
-    src: "/dev/mapper/cryptroot"
-    fstype: "btrfs"
-    opts: "subvol=ROOT,defaults,noatime,ssd,compress=lzo"
-    state: "mounted"
-
-- name: Mount home partition
-  mount:
-    name: "/mnt/home"
-    src: "/dev/mapper/cryptroot"
-    fstype: "btrfs"
-    opts: "subvol=home,defaults,noatime,ssd,compress=lzo"
-    state: "mounted"
-
-- name: Mount snapshots partition
-  mount:
-    name: "/mnt/snapshots"
-    src: "/dev/mapper/cryptroot"
-    fstype: "btrfs"
-    opts: "subvol=snapshots,defaults,noatime,ssd,compress=lzo"
-    state: "mounted"
+    path: /mnt
+    src: /dev/vg.main/root
+    fstype: ext4
+    state: mounted
 
 - name: Mount boot partition
   mount:
-    name: "/mnt/boot"
+    name: /mnt/boot
     src: "{{ disk_dev }}1"
-    fstype: "vfat"
-    state: "mounted"
+    fstype: vfat
+    state: mounted    
