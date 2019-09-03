@@ -1,7 +1,10 @@
 # Write your default config options here!
 
-vo=opengl
-#vo=opengl-hq
+vo=gpu
+#profile=gpu-hq
+gpu-api=vulkan
+#scale=ewa_lanczossharp
+#cscale=ewa_lanczossharp
 hwdec=vaapi
 
 # Write your default config options here!
@@ -14,6 +17,7 @@ slang = fr
 sub-color="#ffffffff"
 sub-border-color="#f0000000"
 sub-codepage=utf8:cp1256
+#sub-font-size=45
 
 cache=8192
 

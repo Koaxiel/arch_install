@@ -12,7 +12,7 @@
   #    dest: /usr/lib/urxvt/perl/vtwheel
   #  become: true
 
-- name: setup rofi
+- name: setup Xresources
   copy:
     src: files/Xresources
     dest: '{{ ansible_user_dir }}/.Xresources'
@@ -22,13 +22,24 @@
   become: true
   become_user: '{{ username }}'
 
-- name: create .mpv folder
+- name: create configurations folders
   file:
-    path: '{{ ansible_user_dir }}/.mpv'
+    path: '{{ ansible_user_dir }}/{{ item }}'
     owner: '{{ username }}'
     group: users
     state: directory
     mode: 0755
+  loop: [.mpv, .config/rofi]
+  become: true
+  become_user: '{{ username }}'
+
+- name: config rofi
+  copy:
+    src: files/rofi
+    dest: '{{ ansible_user_dir }}/.config/rofi/config'
+    owner: '{{ username }}'
+    group: users
+    mode: 0644
   become: true
   become_user: '{{ username }}'
 

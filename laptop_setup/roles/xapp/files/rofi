@@ -1,0 +1,34 @@
+! -- Rofi -- !
+
+! Enabled modi
+rofi.modi:                           window,drun,ssh,combi
+! Window opacity
+rofi.opacity:                        100
+! Font to use
+rofi.font:                           Noto Sans Bold 12
+! Color scheme for normal row
+rofi.color-normal:                   argb:cc1c1c1c, #d0d0d0, argb:cc1c1c1c, #1c1c1c, #ff0090
+! Color scheme for urgent row
+rofi.color-urgent:                   argb:cc1c1c1c, #ff4500, argb:cc1c1c1c, #1c1c1c, #ff4500
+! Color scheme for active row
+rofi.color-active:                   argb:cc1c1c1c, #1e90ff, argb:cc1c1c1c, #1c1c1c, #ff0090
+! Color scheme window
+rofi.color-window:                   argb:cc1c1c1c, argb:cc1c1c1c, #1e90ff
+! Border width
+rofi.bw:                             0
+! Location on screen
+rofi.location:                       0
+! Padding
+rofi.padding:                        0
+! Always show number of lines
+rofi.fixed-num-lines:                false
+! Whether to load and show icons
+rofi.show-icons:                     true
+! Set the modi to combine in combi mode
+rofi.combi-modi:                     drun,ssh
+! Margin between rows
+rofi.line-margin:                    0
+! Pre-set filter
+rofi.separator-style:                solid
+! Hide scroll-bar
+rofi.hide-scrollbar:                 true
