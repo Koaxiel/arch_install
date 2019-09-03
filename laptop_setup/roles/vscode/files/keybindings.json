@@ -1,0 +1,15 @@
+// Place your key bindings in this file to override the defaults
+[
+    {
+      "key": "ctrl+a",
+      "command": "workbench.action.terminal.sendSequence",
+      "args": { "text": "\u001bOH" },
+      "when": "terminalFocus"
+    },
+    {
+      "key": "ctrl+e",
+      "command": "workbench.action.terminal.sendSequence",
+      "args": { "text": "\u001bOF" },
+      "when": "terminalFocus"
+    }
+]

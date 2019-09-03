@@ -1,0 +1,39 @@
+{
+    "workbench.colorTheme": "Monokai",
+    "workbench.startupEditor": "newUntitledFile",
+    "window.zoomLevel": -1,
+    "terminal.integrated.cursorStyle": "underline",
+    "terminal.integrated.fontFamily": "Fira Mono",
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.pep8Enabled": true,
+    "python.linting.enabled": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.rulers": [
+        80,
+        120
+    ],
+    "python.pythonPath": "/usr/bin/python",
+    "breadcrumbs.enabled": true,
+    "ruby.format": "rubocop",
+    "ruby.lint": {
+        "rubocop": true
+    },
+    "rubocop.path": "/usr/bin/rubocop",
+    "editor.tabSize": 2,
+    "latex-workshop.view.pdf.viewer": "tab",
+    "window.titleBarStyle": "custom",
+    "terminal.integrated.copyOnSelection": true,
+    "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback', 'Noto Sans Mono'",
+    "go.lintTool": "golangci-lint",
+    "go.lintFlags": [
+        "--fast"
+    ],
+    "editor.multiCursorModifier": "ctrlCmd",
+    "[ruby]": {
+        "editor.defaultFormatter": "misogi.ruby-rubocop"
+    },
+    "ruby.rubocop.useBundler": true
+ }

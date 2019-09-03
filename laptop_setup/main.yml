@@ -27,3 +27,4 @@
     - { role: nettool, tags: nettool }
     - { role: xapp, tags: xapp }
     - { role: i3, tags: i3 }
+    - { role: vscode, tags: vscode }

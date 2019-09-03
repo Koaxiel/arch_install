@@ -1,0 +1,28 @@
+---
+# tasks file for vscode
+- name: Install Visual Studio Code
+  pacman:
+    name: code
+    state: present
+  become: true
+
+- name: Create vscode directory
+  file:
+    path: "{{ ansible_user_dir }}/.config/Code\ -\ OSS/User/"
+    recurse: yes
+    owner: "{{ username }}"
+    group: users
+    state: directory
+  become: true
+  become_user: '{{ username }}'
+
+- name: Setup config files
+  copy:
+    src: "files/{{ item}}"
+    dest: "{{ ansible_user_dir }}/.config/Code\ -\ OSS/User/{{ item }}"
+    owner: "{{ username }}"
+    group: users
+    mode: 0644
+  become: true
+  become_user: '{{ username }}'
+  loop: [keybindings.json, settings.json]
