@@ -10,7 +10,7 @@ Xft.hintstyle               : hintslight
 
 ! -- Cursor -- !
 
-Xcursor.theme: Paper
+Xcursor.theme: Adwaita
 Xcursor.size: 16
 
 ! -- Colors -- !

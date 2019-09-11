@@ -7,5 +7,14 @@ packages: [
   adapta-gtk-theme,
   awesome-terminal-fonts,
   mate-notification-daemon,
-  xorg-xbacklight,
+  acpilight,
+  papirus-icon-theme,
+]
+
+icon_sizes: [
+  22x22,
+  24x24,
+  32x32,
+  48x48,
+  64x64,
 ]

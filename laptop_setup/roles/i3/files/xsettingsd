@@ -1,7 +1,7 @@
-Gtk/CursorThemeName "Paper"
+Gtk/CursorThemeName "Adwaita"
 Gtk/FontName "Noto Sans 8"
 Net/FallbackIconTheme "gnome"
-Net/IconThemeName "Paper"
+Net/IconThemeName "Papirus"
 Net/SoundThemeName "freedesktop"
 Net/ThemeName "Adapta-Nokto"
 Xft/Antialias 1

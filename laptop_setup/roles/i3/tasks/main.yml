@@ -50,18 +50,17 @@
   become: true
   become_user: '{{ username }}'
 
-- name: Build paper-icon-theme
-  command: 'aur sync -c --no-view {{ item }}'
-  args:
-    creates: '/var/cache/pacman/custom/{{ item }}*'
-  become: true
-  become_user: '{{ username }}'
-  with_items:
-    - paper-icon-theme
+# - name: Build paper-icon-theme
+#   command: 'aur sync -c --no-view {{ item }}'
+#   args:
+#     creates: '/var/cache/pacman/custom/{{ item }}*'
+#   become: true
+#   become_user: '{{ username }}'
+#   with_items:
+#     - paper-icon-theme
 
-- name: Install package
-  pacman:
-    name: 'paper-icon-theme'
-    state: present
-    update_cache: yes
-  become: true
+- name: change folder color of Papirus
+  include_tasks: papirus.yml
+  loop: "{{ icon_sizes }}"
+  loop_control:
+    loop_var: icon_size

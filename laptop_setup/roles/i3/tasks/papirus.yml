@@ -1,0 +1,23 @@
+---
+
+- stat:
+    path: "{{ item }}"
+  register: st
+  with_fileglob: 
+    - "/usr/share/icons/Papirus/{{ icon_size }}/places/folder-black-*"
+    - "/usr/share/icons/Papirus/{{ icon_size }}/places/user-black-*"
+
+- name: Create symbolic link {{ item.stat.path|basename|regex_replace('-black') }}
+  file:
+    src: "{{ item.stat.path|basename }}"
+    path: "{{ item.stat.path|regex_replace('-black') }}"
+    state: link
+    force: yes
+  when: 
+   - item.stat.path is defined
+   - item.stat.islnk == False
+   - item.stat.isdir == False
+  loop: "{{ st.results }}"
+  become: true
+
+  
