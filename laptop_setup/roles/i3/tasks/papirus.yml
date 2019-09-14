@@ -4,8 +4,8 @@
     path: "{{ item }}"
   register: st
   with_fileglob: 
-    - "/usr/share/icons/Papirus/{{ icon_size }}/places/folder-black-*"
-    - "/usr/share/icons/Papirus/{{ icon_size }}/places/user-black-*"
+    - "/usr/share/icons/Papirus/{{ icon_size }}/places/folder-black*"
+    - "/usr/share/icons/Papirus/{{ icon_size }}/places/user-black*"
 
 - name: Create symbolic link {{ item.stat.path|basename|regex_replace('-black') }}
   file:
