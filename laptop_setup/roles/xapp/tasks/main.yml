@@ -67,6 +67,12 @@
   become: true
   become_user: '{{ username }}'
 
+- file:
+    path: '{{ ansible_user_dir }}/.config/systemd/user/default.target.wants'
+    state: directory
+  become: true
+  become_user: '{{ username }}'
+
 - name: enable redshift-gtk.service
   # systemd:
   #   name: redshift-gtk.service
