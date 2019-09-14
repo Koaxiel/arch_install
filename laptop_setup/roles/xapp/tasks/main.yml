@@ -1,16 +1,9 @@
 ---
-
 - name: Install xapp
   pacman:
     name: '{{ packages }}'
     state: present
   become: true
-
-  #- name: install urxvt-vtwheel
-  #  copy:
-  #    src: files/vtwheel
-  #    dest: /usr/lib/urxvt/perl/vtwheel
-  #  become: true
 
 - name: setup Xresources
   copy:
@@ -63,3 +56,26 @@
   become: true
   become_user: '{{ username }}'
   loop: [gitconfig, gitconfig.ignore]
+
+- name: config redshift
+  copy:
+    src: files/redshift
+    dest: '{{ ansible_user_dir }}/.config/redshift.conf'
+    owner: '{{ username }}'
+    group: users
+    mode: 0644
+  become: true
+  become_user: '{{ username }}'
+
+- name: enable redshift-gtk.service
+  # systemd:
+  #   name: redshift-gtk.service
+  #   scope: user
+  #   enabled: yes
+  # become_method: machinectl
+  file:
+    src: /usr/lib/systemd/user/redshift-gtk.service
+    dest: '{{ ansible_user_dir }}/.config/systemd/user/default.target.wants/redshift-gtk.service'
+    state: link
+  become: true
+  become_user: '{{ username }}'
