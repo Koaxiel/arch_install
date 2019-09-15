@@ -1,47 +1,36 @@
 ---
-- name: install neovim
-  pacman:
-    name: neovim
-    state: present
-  become: true
 
-- name: ensure nvim directory exists
-  file:
-    path: "{{ ansible_user_dir }}/.config/nvim/{{ item }}"
-    recurse: yes
-    owner: "{{ username }}"
-    group: users
-    state: directory
-  loop: [colors, autoload]
+- name: build neovim-airline
+  command: 'aur sync -c --no-view {{ item }}'
+  args:
+    creates: '/var/cache/pacman/custom/{{ item }}*'
   become: true
   become_user: '{{ username }}'
+  loop:
+    - neovim-airline
+    - neovim-airline-themes
+
+- name: install neovim
+  pacman:
+    name: [neovim, neovim-airline, neovim-airline-themes]
+    state: present
+    update_cache: yes
+  become: true
 
 - name: install config file
   copy:
-    src: files/init.vim
-    dest: "{{ ansible_user_dir }}/.config/nvim/init.vim"
-    owner: "{{ username }}"
-    group: users
-    mode: 0644
+    src: files/koaxiel.vim
+    dest: '/usr/share/nvim/koaxiel.vim'
   become: true
-  become_user: '{{ username }}'
+
+- name: update sysinit.vim
+  lineinfile:
+    dest: /etc/xdg/nvim/sysinit.vim
+    line: 'source /usr/share/nvim/koaxiel.vim'
+  become: true
 
 - name: install colors scheme
   copy:
     src: files/molokai.vim
-    dest: "{{ ansible_user_dir }}/.config/nvim/colors/molokai.vim"
-    owner: "{{ username }}"
-    group: users
-    mode: 0644
+    dest: "/usr/share/nvim/runtime/colors/molokai.vim"
   become: true
-  become_user: '{{ username }}'
-
-- name: install vim-plug
-  copy:
-    src: files/plug.vim
-    dest: "{{ ansible_user_dir }}/.config/nvim/autoload/plug.vim"
-    owner: "{{ username }}"
-    group: users
-    mode: 0644
-  become: true
-  become_user: '{{ username }}'
