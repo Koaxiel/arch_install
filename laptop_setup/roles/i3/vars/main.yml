@@ -9,6 +9,7 @@ packages: [
   mate-notification-daemon,
   acpilight,
   papirus-icon-theme,
+  pavucontrol,
 ]
 
 icon_sizes: [
@@ -18,3 +19,5 @@ icon_sizes: [
   48x48,
   64x64,
 ]
+
+color: grey
