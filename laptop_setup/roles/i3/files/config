@@ -128,6 +128,8 @@ set $ws7 "7: 7 "
 set $ws8 "8: 8 "
 set $ws9 "9: 9 "
 set $ws10 "10: 10 "
+set $ws11 "<span size='large' font_weight='light'> </span>"
+set $ws12 "<span size='large' font_weight='light'> </span>"
 
 # switch to workspace
 bindsym $mod+ampersand workspace $ws1
@@ -140,6 +142,8 @@ bindsym $mod+egrave workspace $ws7
 bindsym $mod+underscore workspace $ws8
 bindsym $mod+ccedilla workspace $ws9
 bindsym $mod+agrave workspace $ws10
+bindsym $mod+parenright workspace $ws11
+bindsym $mod+equal workspace $ws12
 
 bindsym $mod+a workspace prev
 bindsym $mod+z workspace next
@@ -155,6 +159,8 @@ bindsym $mod+Shift+egrave move container to workspace $ws7
 bindsym $mod+Shift+underscore move container to workspace $ws8
 bindsym $mod+Shift+ccedilla move container to workspace $ws9
 bindsym $mod+Shift+agrave move container to workspace $ws10
+bindsym $mod+Shift+parenright workspace $ws11
+bindsym $mod+Shift+equal workspace $ws12
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -227,8 +233,8 @@ force_display_urgency_hint 500 ms
 
 #assign
 assign [class="Thunderbird"] → $ws1
-for_window [class="Spotify" instance="spotify"] move to workspace <span size='large' font_weight='light'> </span> Spotify <>
-for_window [class="Slack" instance="slack"] move to workspace <span size='large' font_weight='light'> </span> Slack <>
+assign [class="Slack"] → $ws11
+for_window [class="Spotify"] move to workspace $ws12
 
 exec --no-startup-id /usr/lib/mate-notification-daemon/mate-notification-daemon
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
