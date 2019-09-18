@@ -17,10 +17,30 @@
   become: true
   become_user: '{{ username }}'
 
+- name: create environment.d folder
+  file:
+    path: '{{ ansible_user_dir }}/.config/environment.d'
+    owner: '{{ username }}'
+    group: users
+    state: directory
+    mode: 0755
+  become: true
+  become_user: '{{ username }}'
+
 - name: setup gpg-agent
   copy:
     src: files/gpg-agent.conf
     dest: "{{ ansible_user_dir }}/.gnupg/gpg-agent.conf"
+    owner: "{{ username }}"
+    group: users
+    mode: 0644
+  become: true
+  become_user: '{{ username }}'
+
+- name: Add envirnoment varaibles for ssh
+  copy:
+    src: files/ssh_env.conf
+    dest: "{{ ansible_user_dir }}/.config/environment.d/ssh.conf"
     owner: "{{ username }}"
     group: users
     mode: 0644
