@@ -1,12 +1,9 @@
 ---
 - name: Install zsh
   pacman:
-    name: {{ item }}
+    name: [zsh-syntax-highlighting, zsh-autosuggestions]
     state: present
   become: true
-  loop:
-    - zsh-syntax-highlighting
-    - zsh-autosuggestions
 
 - name: Create zshrc for {{ username }}
   copy:
