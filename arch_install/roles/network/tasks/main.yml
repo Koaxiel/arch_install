@@ -23,3 +23,14 @@
     dest: /etc/resolv.conf
     state: link
     force: yes
+
+- name: Create network file for DHCP
+  copy:
+    content: |
+      [Match]
+      Name=en*
+
+      [Network]
+      DHCP=ipv4
+    dest: /etc/systemd/network/dhcp.network
+  when: ansible_virtualization_role == 'guest'

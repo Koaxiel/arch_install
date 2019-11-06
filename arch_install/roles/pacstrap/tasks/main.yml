@@ -1,11 +1,11 @@
 ---
 - name: pacstrap on host
-  command: "pacstrap /mnt base base-devel ansible intel-ucode linux-lts wpa_supplicant"
+  command: "pacstrap /mnt base base-devel ansible intel-ucode linux linux-lts lvm2 wpa_supplicant"
   when: ansible_virtualization_role == 'host'
 
 - block:
   - name: pacstrap on guest
-    command: "pacstrap -c /mnt base base-devel ansible intel-ucode linux-lts openssh spice-vdagent"
+    command: "pacstrap -c /mnt base base-devel ansible intel-ucode linux linux-lts lvm2 openssh spice-vdagent"
 
   - name: Create ssh directory
     file: path=/mnt/root/.ssh state=directory

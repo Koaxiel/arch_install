@@ -62,11 +62,10 @@
     user: name=root password={{ root_password | password_hash('sha512') }}
     tags: root_password
 
-  - name: Enable sshd and dhcpcd
+  - name: Enable sshd
     service:
-      name: "{{ item }}"
+      name: sshd
       enabled: yes
-    loop: [sshd, dhcpcd]
     when: ansible_virtualization_role == 'guest'
   
   # - fail:
