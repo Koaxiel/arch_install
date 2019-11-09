@@ -16,14 +16,6 @@
     enabled: yes
   loop: [systemd-resolved.service, systemd-networkd.service]
 
-- name: Symlink /etc/resolv.conf
-  file:
-    src: /run/systemd/resolve/resolv.conf
-    # src: /usr/lib/systemd/resolv.conf
-    dest: /etc/resolv.conf
-    state: link
-    force: yes
-
 - name: Create network file for DHCP
   copy:
     content: |

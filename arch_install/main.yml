@@ -23,23 +23,6 @@
     loop: ['/root/koaxiel', '/root/wpa_supplicant-wired.conf']
     when: ansible_virtualization_role == 'host'
 
-  - name: Mount pseudo file systems
-    mount:
-      src: "{{ item.src }}"
-      name: "/mnt{{ item.mount }}"
-      fstype: "{{ item.type }}"
-      state: mounted
-      opts: "{{ item.opts }}"
-    loop:
-      - { src: 'proc', mount: '/proc', type: 'proc', opts: 'nosuid,noexec,nodev'}
-      - { src: 'sys', mount: '/sys', type: 'sysfs', opts: 'nosuid,noexec,nodev,ro'}
-      - { src: 'efivars', mount: '/sys/firmware/efi/efivars', type: 'efivarfs', opts: 'nosuid,noexec,nodev'}
-      - { src: 'udev', mount: '/dev', type: 'devtmpfs', opts: 'mode=0755,nosuid'}
-      - { src: 'devpts', mount: '/dev/pts', type: 'devpts', opts: 'mode=0620,gid=5,nosuid,noexec'}
-      - { src: 'shm', mount: '/dev/shm', type: 'tmpfs', opts: 'mode=1777,nosuid,nodev'}
-      - { src: '/run', mount: '/run', type: none, opts: 'bind'}
-      - { src: 'tmp', mount: '/tmp', type: 'tmpfs', opts: 'mode=1777,strictatime,nodev,nosuid'}
-
 # Chroot
 - hosts: /mnt
   user: root
@@ -67,37 +50,3 @@
       name: sshd
       enabled: yes
     when: ansible_virtualization_role == 'guest'
-  
-  # - fail:
-
-# Cleaning
-- hosts: localhost
-  user: root
-  connection: local
-  vars:
-    disk_dev: /dev/sda
-
-  tasks:
-  - name: Unmount pseudo file systems
-    mount:
-      src: "{{ item.src }}"
-      name: "/mnt{{ item.mount }}"
-      fstype: "{{ item.type }}"
-      state: unmounted
-      opts: "{{ item.opts }}"
-    loop:
-      - { src: 'proc', mount: '/proc', type: 'proc', opts: 'nosuid,noexec,nodev'}
-      - { src: 'efivars', mount: '/sys/firmware/efi/efivars', type: 'efivarfs', opts: 'nosuid,noexec,nodev'}
-      - { src: 'sys', mount: '/sys', type: 'sysfs', opts: 'nosuid,noexec,nodev,ro'}
-      - { src: 'devpts', mount: '/dev/pts', type: 'devpts', opts: 'mode=0620,gid=5,nosuid,noexec'}
-      - { src: 'shm', mount: '/dev/shm', type: 'tmpfs', opts: 'mode=1777,nosuid,nodev'}
-      - { src: 'udev', mount: '/dev', type: 'devtmpfs', opts: 'mode=0755,nosuid'}
-      - { src: '/run', mount: '/run', type: none, opts: 'bind'}
-      - { src: 'tmp', mount: '/tmp', type: 'tmpfs', opts: 'mode=1777,strictatime,nodev,nosuid'}
-
-  - name: "Unmount {{ disk_dev }} partitions if existing"
-    mount:
-      path: "{{ item.mount }}"
-      state: unmounted
-    loop: "{{ ansible_mounts | sort(attribute='mount', reverse=True) }}"
-    when: disk_dev in item.device or '/dev/mapper' in item.device
