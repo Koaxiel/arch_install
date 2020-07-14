@@ -3,7 +3,6 @@
     "workbench.startupEditor": "newUntitledFile",
     "window.zoomLevel": -1,
     "terminal.integrated.cursorStyle": "underline",
-    "terminal.integrated.fontFamily": "Fira Mono",
     "files.trimTrailingWhitespace": true,
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true,

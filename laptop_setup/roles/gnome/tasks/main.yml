@@ -3,7 +3,7 @@
 
 - name: Install gnome
   pacman:
-    name: ['gnome', 'gnome-extra', 'pulseaudio-bluetooth', 'otf-fira-mono']
+    name: ['gnome', 'gnome-extra', 'pulseaudio-bluetooth', 'ttf-fira-code']
     state: present
   become: true
 
