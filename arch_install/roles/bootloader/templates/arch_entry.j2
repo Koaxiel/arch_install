@@ -9,4 +9,4 @@ linux          /vmlinuz-linux
 initrd         /intel-ucode.img
 initrd         /initramfs-linux.img
 {% endif %}
-options        rd.luks.name={{ sys_uuid }}=cryptlvm root=/dev/vg.main/root resume=/dev/vg.main/swap rw rd.luks.options=discard
+options        rd.luks.name={{ sys_uuid }}=cryptlvm root=/dev/vg.main/root resume=/dev/vg.main/swap rw rd.luks.options=discard systemd.unified_cgroup_hierarchy=1
