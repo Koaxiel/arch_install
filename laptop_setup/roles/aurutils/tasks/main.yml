@@ -17,7 +17,7 @@
   rescue:
     - block:
       - name: Add gpg key
-        command: gpg --recv-keys DBE7D3DD8C81D58D0A13D0E76BC26A17B9B7018A
+        command: gpg --auto-key-locate clear,wkd --locate-key alad@archlinux.org
         become: true
         become_user: '{{ username }}'
 
