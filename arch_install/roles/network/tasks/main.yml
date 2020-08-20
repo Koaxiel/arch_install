@@ -11,9 +11,10 @@
 #     creates: /etc/systemd/system/multi-user.target.wants/systemd-resolved.service
 
 - name: Enable {{ item }}
-  systemd:
-    name: "{{ item }}"
-    enabled: yes
+  command: "systemctl enable {{ item }}"
+  # systemd:
+  #   name: "{{ item }}"
+  #   enabled: yes
   loop: [systemd-resolved.service, systemd-networkd.service]
 
 - name: Create network file for DHCP

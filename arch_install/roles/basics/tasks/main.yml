@@ -42,6 +42,7 @@
     state: link
 
 - name: Enable systemd-timesyncd.service
-  systemd:
-    name: systemd-timesyncd.service
-    enabled: yes
+  command: systemctl enable systemd-timesyncd.service
+  # systemd:
+  #   name: systemd-timesyncd.service
+  #   enabled: yes
