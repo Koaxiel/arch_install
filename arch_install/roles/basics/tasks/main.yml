@@ -1,21 +1,28 @@
 ---
 - name: Set localgen
-  locale_gen: 
+  locale_gen:
     name: "{{ item }}"
     state: present
   loop: [en_US.UTF-8, fr_FR.UTF-8]
 
 - name: Set locale.conf
-  copy: src=files/locale.conf dest=/etc/locale.conf
+  copy:
+    src: files/locale.conf
+    dest: /etc/locale.conf
+    mode: 0644
 
 - name: Set vconsole
-  copy: src=files/vconsole.conf dest=/etc/vconsole.conf
+  copy:
+    src: files/vconsole.conf
+    dest: /etc/vconsole.conf
+    mode: 0644
 
 - name: Set hostname
   lineinfile:
     path: /etc/hostname
     line: "{{ hostname }}"
     create: yes
+    mode: 0644
 
 # - name: Set machine-id
 #   # command: systemd-firstboot --root=/ --setup-machine-id

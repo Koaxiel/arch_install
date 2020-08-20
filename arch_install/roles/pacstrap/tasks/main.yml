@@ -8,7 +8,9 @@
     command: "pacstrap -c /mnt base base-devel ansible intel-ucode linux linux-lts lvm2 openssh spice-vdagent"
 
   - name: Create ssh directory
-    file: path=/mnt/root/.ssh state=directory
+    file:
+      path: /mnt/root/.ssh
+      state: directory
 
   - name: Copy ssh authorized_keys
     copy:

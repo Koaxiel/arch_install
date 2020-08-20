@@ -11,7 +11,8 @@
     path: /etc/modprobe.d/i915.conf
     line: 'options i915 enable_guc=2 enable_fbc=1 fastboot=1'
     create: yes
-  become: true 
+    mode: 0644
+  become: true
 
 - name: ensure xorg.conf.d directory exists
   file:
@@ -23,6 +24,7 @@
   copy:
     src: "files/{{ item }}"
     dest: "/etc/X11/xorg.conf.d/{{ item }}"
+    mode: 0644
   become: true
   loop:
     - 00-keyboard.conf

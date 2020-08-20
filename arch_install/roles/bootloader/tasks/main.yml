@@ -5,10 +5,13 @@
     creates: /boot/EFI/systemd/systemd-bootx64.efi
 
 - name: Install loader.conf
-  copy: src=files/loader.conf dest=/boot/loader/loader.conf
+  copy:
+    src: files/loader.conf
+    dest: /boot/loader/loader.conf
+    mode: 0644
 
 - name: Install arch entry
-  template: 
-    src: templates/arch_entry.j2 
+  template:
+    src: templates/arch_entry.j2
     dest: /boot/loader/entries/{{ item }}
   loop: [arch.conf, arch-lts.conf]

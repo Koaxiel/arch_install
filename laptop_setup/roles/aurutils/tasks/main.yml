@@ -46,6 +46,7 @@
     copy:
       src: files/custom
       dest: /etc/pacman.d/custom
+      mode: 0644
     become: true
 
   - name: Include custom repo in pacman.conf

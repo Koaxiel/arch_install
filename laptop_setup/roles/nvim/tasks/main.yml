@@ -21,6 +21,7 @@
   copy:
     src: files/koaxiel.vim
     dest: '/usr/share/nvim/koaxiel.vim'
+    mode: 0644
   become: true
 
 - name: update sysinit.vim
@@ -33,4 +34,5 @@
   copy:
     src: files/molokai.vim
     dest: "/usr/share/nvim/runtime/colors/molokai.vim"
+    mode: 0644
   become: true
