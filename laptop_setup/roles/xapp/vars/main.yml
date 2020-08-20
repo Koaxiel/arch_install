@@ -12,5 +12,5 @@ packages: [
   arandr,
   xorg-xdpyinfo,
   git-review,
-  redshift,
+  #redshift,
 ]
