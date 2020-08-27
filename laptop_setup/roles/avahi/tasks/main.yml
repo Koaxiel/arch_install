@@ -1,0 +1,23 @@
+---
+# tasks file for avahi
+
+- name: Install nss-mdns
+  pacman:
+    name: 'nss-mdns'
+    state: present
+  become: true
+
+- name: Enable {{ item }}
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+  loop: [avahi-daemon.service]
+  become: true
+
+- name: Add mdns
+  lineinfile:
+    path: /etc/nsswitch.conf
+    regexp: '^(.*)(resolve.*)$'
+    line: '\1mdns_minimal [NOTFOUND=return] \2'
+    backrefs: yes
+  become: true

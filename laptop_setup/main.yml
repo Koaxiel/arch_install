@@ -23,6 +23,7 @@
     - { role: smart, tags: smart }
     - { role: gnome, tags: gnome }
     - { role: networkmanager, tags: networkmanager }
+    - { role: avahi, tags: avahi }
     - { role: xserver, tags: xserver }
     - { role: nettool, tags: nettool }
     - { role: xapp, tags: xapp }
