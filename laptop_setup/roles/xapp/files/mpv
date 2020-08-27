@@ -19,6 +19,6 @@ sub-border-color="#f0000000"
 sub-codepage=utf8:cp1256
 #sub-font-size=45
 
-cache=8192
+cache=auto
 
 save-position-on-quit
