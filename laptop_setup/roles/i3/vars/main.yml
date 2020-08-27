@@ -10,6 +10,7 @@ packages: [
   acpilight,
   papirus-icon-theme,
   pavucontrol,
+  cbatticon,
 ]
 
 icon_sizes: [
