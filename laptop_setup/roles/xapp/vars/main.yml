@@ -12,5 +12,7 @@ packages: [
   arandr,
   xorg-xdpyinfo,
   git-review,
+  pwgen,
+  man-db,
   #redshift,
 ]
