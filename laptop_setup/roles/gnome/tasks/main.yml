@@ -3,12 +3,15 @@
 
 - name: Install gnome
   pacman:
-    name: ['gnome', 'gnome-extra', 'pulseaudio-bluetooth', 'ttf-fira-code']
+    name: ['gnome', 'gnome-extra', 'pulseaudio-bluetooth', 'ttf-fira-code', 'system-config-printer', 'cups']
     state: present
   become: true
 
-- name: enable gdm
-  service: name=gdm enabled=yes
+- name: Enable {{ item }}
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+  loop: [gdm.service, 'org.cups.cupsd.socket']
   become: true
 
 - name: ensure dconf/user.d directory exists
