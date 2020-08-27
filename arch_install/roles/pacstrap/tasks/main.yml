@@ -5,7 +5,7 @@
 
 - block:
   - name: pacstrap on guest
-    command: "pacstrap -c /mnt base base-devel ansible intel-ucode linux linux-lts lvm2 openssh spice-vdagent"
+    command: "pacstrap -c /mnt base base-devel ansible intel-ucode linux linux-lts linux-firmware lvm2 openssh spice-vdagent"
 
   - name: Create ssh directory
     file:
