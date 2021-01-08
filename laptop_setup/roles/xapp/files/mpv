@@ -16,7 +16,7 @@ slang = fr
 # Subtitle
 sub-color="#ffffffff"
 sub-border-color="#f0000000"
-sub-codepage=utf8:cp1256
+sub-codepage=utf8:latin9
 #sub-font-size=45
 
 cache=auto
