@@ -243,5 +243,5 @@ for_window [class="Spotify"] move to workspace $ws12
 exec --no-startup-id /usr/lib/mate-notification-daemon/mate-notification-daemon
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec_always --no-startup-id nm-applet
-exec_always --no-startup-id cbatticon
+exec --no-startup-id cbatticon
 exec --no-startup-id /usr/bin/feh --bg-scale ~/Downloads/canyon_16_1_by_lyssonan-d8gvns3.jpg
