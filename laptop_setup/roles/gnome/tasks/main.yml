@@ -11,7 +11,7 @@
   systemd:
     name: "{{ item }}"
     enabled: yes
-  loop: [gdm.service, 'org.cups.cupsd.socket']
+  loop: [gdm.service]
   become: true
 
 - name: ensure dconf/user.d directory exists
