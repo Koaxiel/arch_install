@@ -70,6 +70,12 @@
     become: true
     become_user: '{{ username }}'
 
+  - name: Create pacman configuration file for aurutils
+    file:
+      src: /usr/share/devtools/pacman-extra.conf
+      dest: /etc/aurutils/pacman-custom.conf
+      state: link
+
   - name: Synchronize pacman
     pacman:
       update_cache: yes
