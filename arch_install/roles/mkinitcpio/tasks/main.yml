@@ -6,6 +6,7 @@
     state: present
     regexp: '^(HOOKS=.*)$'
     line: '#\1'
+    backrefs: yes
   become: true
   notify: mkinitcpio
 
