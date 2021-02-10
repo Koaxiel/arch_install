@@ -1,11 +1,20 @@
 ---
 # tasks file for mkinitcpio
+- name: Comment initial HOOKS mkinitcpio.conf
+  lineinfile:
+    path: /etc/mkinitcpio.conf
+    state: present
+    regexp: '^(HOOKS=.*)$'
+    line: '#\1'
+  become: true
+  notify: mkinitcpio
+
 - name: Update HOOKS mkinitcpio.conf
   lineinfile:
     path: /etc/mkinitcpio.conf
     state: present
-    regexp: '^HOOKS='
-    line: 'HOOKS="base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt sd-lvm2 filesystems fsck"'
+    insertafter: '^#HOOKS='
+    line: 'HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt sd-lvm2 filesystems fsck)'
   become: true
   notify: mkinitcpio
 
