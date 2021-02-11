@@ -19,11 +19,11 @@
   become: true
   notify: mkinitcpio
 
-# - name: Update MODULES mkinitcpio.conf
-#   lineinfile:
-#     path: /etc/mkinitcpio.conf
-#     state: present
-#     regexp: '^MODULES='
-#     line: 'MODULES="i915"'
-#   become: true
-#   notify: mkinitcpio
+- name: Update MODULES mkinitcpio.conf
+  lineinfile:
+    path: /etc/mkinitcpio.conf
+    state: present
+    regexp: '^MODULES='
+    line: 'MODULES="i915"'
+  become: true
+  notify: mkinitcpio
