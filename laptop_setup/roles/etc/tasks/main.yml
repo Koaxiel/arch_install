@@ -24,15 +24,6 @@
     backrefs: yes
   become: true
 
-- name: /etc/systemd/system.conf
-  lineinfile:
-    path: /etc/systemd/system.conf
-    state: present
-    regexp: '#RuntimeWatchdogSec='
-    line: 'RuntimeWatchdogSec=20'
-    backrefs: yes
-  become: true
-
 - name: symlink /etc/resolv.conf
   file:
     src: /run/systemd/resolve/stub-resolv.conf
