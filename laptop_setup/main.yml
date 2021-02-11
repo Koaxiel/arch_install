@@ -24,7 +24,7 @@
     - { role: gnome, tags: gnome }
     - { role: networkmanager, tags: networkmanager }
     - { role: avahi, tags: avahi }
-    - { role: tlp, tags: tlp } Trigger freeze after suspend
+    - { role: tlp, tags: tlp }
     - { role: xserver, tags: xserver }
     - { role: nettool, tags: nettool }
     - { role: xapp, tags: xapp }
