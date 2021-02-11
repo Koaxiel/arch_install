@@ -1,20 +1,8 @@
 ---
-# tasks file for network
-# - name: Enable systemd-networkd
-#   command: systemctl enable systemd-networkd.service
-#   args:
-#     creates: /etc/systemd/system/multi-user.target.wants/systemd-networkd.service
-
-# - name: Enable systemd-resolved
-#   command: systemctl enable systemd-resolved.service
-#   args:
-#     creates: /etc/systemd/system/multi-user.target.wants/systemd-resolved.service
-
 - name: Enable {{ item }}
-  command: "systemctl enable {{ item }}"
-  # systemd:
-  #   name: "{{ item }}"
-  #   enabled: yes
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
   loop: [systemd-resolved.service, systemd-networkd.service]
 
 - name: Create network file for DHCP

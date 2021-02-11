@@ -46,9 +46,7 @@
     tags: root_password
 
   - name: Enable sshd
-    command: systemctl enable sshd.service
-    # systemd:
-    #   name: sshd.service
-    #   enabled: yes
-
+    systemd:
+      name: sshd.service
+      enabled: yes
     when: ansible_virtualization_role == 'guest'
