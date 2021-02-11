@@ -25,6 +25,5 @@
 
       [Network]
       DHCP=ipv4
-    dest: /etc/systemd/network/dhcp.network
+    dest: /etc/systemd/network/20-wired.network
     mode: 0644
-  when: ansible_virtualization_role == 'guest'
