@@ -4,6 +4,7 @@
   connection: local
   vars:
     disk_dev: /dev/sda
+    cpu_vendor: "{{ 'intel' if ansible_processor|select('in', 'Intel') else 'amd' }}"
 
   pre_tasks:
   - fail:
@@ -31,6 +32,7 @@
     ansible_chroot_exe: arch-chroot
     disk_dev: /dev/sda
     sys_uuid: "{{ ansible_facts['devices']['sda']['partitions']['sda2']['uuid'] }}"
+    cpu_vendor: "{{ 'intel' if ansible_processor|select('in', 'Intel') else 'amd' }}"
 
   roles:
    - { role: basics, tags: basics }

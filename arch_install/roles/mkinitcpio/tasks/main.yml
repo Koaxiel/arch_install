@@ -27,3 +27,4 @@
     line: 'MODULES="i915"'
   become: true
   notify: mkinitcpio
+  when: cpu_vendor == 'intel'

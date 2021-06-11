@@ -2,6 +2,7 @@
 - hosts: localhost
   vars:
     username: '{{ ansible_user_id }}'
+    cpu_vendor: "{{ 'intel' if ansible_processor|select('in', 'Intel') else 'amd' }}"
 
   pre_tasks:
     - fail:
