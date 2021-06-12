@@ -3,7 +3,7 @@
   user: root
   connection: local
   vars:
-    disk_dev: /dev/sda
+    disk_dev: "/dev/{{ disk }}"
     cpu_vendor: "{{ 'intel' if ansible_processor|select('in', 'Intel') else 'amd' }}"
 
   pre_tasks:
@@ -30,8 +30,9 @@
   connection: chroot
   vars:
     ansible_chroot_exe: arch-chroot
-    disk_dev: /dev/sda
-    sys_uuid: "{{ ansible_facts['devices']['sda']['partitions']['sda2']['uuid'] }}"
+    disk_dev: "/dev/{{ disk }}"
+    lvm_part: "{{ ansible_devices[disk]['partitions'].keys() | map('regex_search', '^.*2$') | select('string') | first }}"
+    sys_uuid: "{{ ansible_devices[disk]['partitions'][lvm_part]['uuid'] }}"
     cpu_vendor: "{{ 'intel' if ansible_processor|select('in', 'Intel') else 'amd' }}"
 
   roles:

@@ -1,11 +1,11 @@
 ---
 - name: "check if {{ disk_dev }} exists"
   stat: "path={{ disk_dev }}"
-  register: disk
+  register: disk_path
 
 - fail:
     msg: "{{ disk_dev }} isn't defined (path doesn't exist)"
-  when: not disk.stat.exists
+  when: not disk_path.stat.exists
 
 # - setup: gather_subset=hardware
 - debug: var=ansible_mounts
@@ -38,10 +38,10 @@
   loop: "{{ disk_dev_info.partitions }}"
 
 # - name: "Delete partionning"
-#   command: "sgdisk -Z {{ disk_dev }}"  
+#   command: "sgdisk -Z {{ disk_dev }}"
 
 # - name: "Flush partition"
-#   command: "partprobe {{ disk_dev }}"  
+#   command: "partprobe {{ disk_dev }}"
 
 - name: "Zeroize {{ disk_dev }}"
   command: "blkdiscard {{ disk_dev }}"
@@ -56,10 +56,19 @@
     state: present
     part_end: 513MiB
 
-- name: Create a FAT32 filesystem on {{ disk_dev }}1
+- setup:
+
+# Fetch the dev of the EFI partion
+- set_fact:
+    uefi_part_dev: "/dev/{{ ansible_devices[disk]['partitions'].keys() | first }}"
+
+- debug:
+    var: uefi_part_dev
+
+- name: Create a FAT32 filesystem on {{ uefi_part_dev }}
   filesystem:
     fstype: vfat
-    dev: "{{ disk_dev }}1"
+    dev: "{{ uefi_part_dev }}"
     opts: -F32 -n EFI
 
 - name: Create LVM partition
@@ -72,21 +81,30 @@
     state: present
     part_start: 513MiB
 
-# - name: "wipefs{{ disk_dev }}2"
-#   command: "wipefs --all {{ disk_dev }}2"
+- setup:
+
+# Fetch the dev of the LVM partion
+- set_fact:
+    lvm_part_dev: "/dev/{{ ansible_devices[disk]['partitions'].keys() | select('ne', uefi_part_dev) | first }}"
+
+- debug:
+    var: lvm_part_dev
+
+# - name: "wipefs{{ lvm_part_dev }}"
+#   command: "wipefs --all {{ lvm_part_dev }}"
 
 - name: Encrypt LVM partition
-  shell: printf {{ root_password }} |cryptsetup luksFormat --type luks2 {{ disk_dev }}2 -
+  shell: printf {{ root_password }} |cryptsetup luksFormat --type luks2 {{ lvm_part_dev }} -
 
 - name: Open encrypted partition
-  shell: 'echo -n {{ root_password }} |cryptsetup open {{ disk_dev }}2 cryptlvm -'
+  shell: 'echo -n {{ root_password }} |cryptsetup open {{ lvm_part_dev }} cryptlvm -'
 
 - name: Formate LVM partition
   filesystem:
     fstype: lvm
     dev : /dev/mapper/cryptlvm
 
-- name: Create a volume group on top of {{ disk_dev }}2  with physical extent size = 32MB
+- name: Create a volume group on top of {{ lvm_part_dev }}  with physical extent size = 32MB
   lvg:
     vg: vg.main
     pvs: /dev/mapper/cryptlvm

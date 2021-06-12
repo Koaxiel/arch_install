@@ -17,9 +17,9 @@
     fstype: ext4
     state: mounted
 
-- name: Mount boot partition
+- name: Mount boot partition ({{ uefi_part_dev }})
   mount:
     name: /mnt/boot
-    src: "{{ disk_dev }}1"
+    src: "{{ uefi_part_dev }}"
     fstype: vfat
-    state: mounted    
+    state: mounted
