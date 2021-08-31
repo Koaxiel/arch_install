@@ -29,7 +29,7 @@
 - name: config rofi
   copy:
     src: files/rofi
-    dest: '{{ ansible_user_dir }}/.config/rofi/config'
+    dest: '{{ ansible_user_dir }}/.config/rofi/config.rasi'
     owner: '{{ username }}'
     group: users
     mode: 0644
