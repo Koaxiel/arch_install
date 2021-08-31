@@ -1,5 +1,6 @@
 [user]
   name = Koaxiel
+  email = 8524870+Koaxiel@users.noreply.github.com
 [alias]
   review = push origin HEAD:refs/publish/master
   gol = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
