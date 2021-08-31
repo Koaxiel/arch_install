@@ -15,7 +15,7 @@
     path: /etc/mkinitcpio.conf
     state: present
     insertafter: '^#HOOKS='
-    line: 'HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt sd-lvm2 filesystems fsck)'
+    line: 'HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt lvm2 filesystems fsck)'
   become: true
   notify: mkinitcpio
 
