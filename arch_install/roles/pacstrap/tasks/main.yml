@@ -1,6 +1,6 @@
 ---
 - name: pacstrap on host
-  command: "pacstrap /mnt base base-devel ansible {{ cpu_vendor }}-ucode linux linux-lts linux-firmware lvm2 wpa_supplicant"
+  command: "pacstrap /mnt base base-devel ansible {{ cpu_vendor }}-ucode linux linux-lts linux-firmware lvm2 iwd"
   when: ansible_virtualization_role == 'host'
 
 - block:
